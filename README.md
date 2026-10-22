@@ -8,7 +8,7 @@
 
 ## Features
 
-### 📢 For Students
+### For Students
 - **Live Feed**: A clean, chronological list of all university notices.
 - **Quick Filters**: Easily find notices from the last week, month, or quarter.
 - **Interactive Comments**: Ask questions or clarify doubts directly under a notice using threaded replies.
@@ -25,3 +25,13 @@
 - "backend" : php
 - "DBMS" : MySQL
 - "frontend" : bootstrap
+
+---
+Setting up the project :
+
+```bash
+git clone git@github.com:titas-ops/CampusBeacon.git
+```
+move the directory/folder inside htdocs
+
+run 
