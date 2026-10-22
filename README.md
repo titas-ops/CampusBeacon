@@ -34,4 +34,9 @@ git clone git@github.com:titas-ops/CampusBeacon.git
 ```
 move the directory/folder inside htdocs
 
-run 
+run XAMPP
+
+go to http://localhost/CampusBeacon/ 
+on web browser
+
+ 
