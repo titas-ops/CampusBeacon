@@ -4,6 +4,24 @@
         <div class="card shadow">
             <div class="card-body">
                 <h3 class="text-center mb-4">Student Login</h3>
+
+                <?php if (isset($_GET['error'])): ?>
+                    <div class="alert alert-danger text-center">
+                        <?php
+                            $error = $_GET['error'];
+                            if ($error === 'empty_fields') echo "Please enter both roll number and password.";
+                            elseif ($error === 'invalid_credentials') echo "Invalid roll number or password.";
+                            else echo "An error occurred. Please try again.";
+                        ?>
+                    </div>
+                <?php endif; ?>
+
+                <?php if (isset($_GET['success'])): ?>
+                    <div class="alert alert-success text-center">
+                        Account created successfully! Please login.
+                    </div>
+                <?php endif; ?>
+
                 <form action="../server/auth.php" method="POST">
                     <div class="mb-3">
                         <label class="form-label">University Roll Number</label>

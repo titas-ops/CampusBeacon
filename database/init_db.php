@@ -1,10 +1,8 @@
-
+<?php
 /**
  * Database Initialization Script
  * Automatically creates the database and tables if they don't exist.
  */
-
-<?php
 require_once 'config.php';
 
 // Initial connection without database selected to create the DB
@@ -28,6 +26,7 @@ $tables = [
     "users" => "CREATE TABLE IF NOT EXISTS users (
         id INT(11) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
         username VARCHAR(50) NOT NULL UNIQUE,
+        roll_number VARCHAR(20) UNIQUE NULL,
         email VARCHAR(100) NOT NULL UNIQUE,
         password VARCHAR(255) NOT NULL,
         role ENUM('admin', 'professor', 'student') NOT NULL,

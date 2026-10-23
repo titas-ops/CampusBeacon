@@ -4,6 +4,25 @@
         <div class="card shadow">
             <div class="card-body">
                 <h3 class="text-center mb-4">Student Registration</h3>
+
+                <?php if (isset($_GET['error'])): ?>
+                    <div class="alert alert-danger text-center">
+                        <?php
+                            $error = $_GET['error'];
+                            if ($error === 'empty_fields') echo "Please fill in all fields.";
+                            elseif ($error === 'passwords_do_not_match') echo "Passwords do not match!";
+                            elseif ($error === 'user_already_exists') echo "Roll number or email already registered.";
+                            else echo "An error occurred. Please try again.";
+                        ?>
+                    </div>
+                <?php endif; ?>
+
+                <?php if (isset($_GET['success'])): ?>
+                    <div class="alert alert-success text-center">
+                        Account created successfully! <a href="login_student.php">Login here</a>
+                    </div>
+                <?php endif; ?>
+
                 <form action="../server/auth.php" method="POST">
                     <div class="mb-3">
                         <label class="form-label">University Roll Number</label>
