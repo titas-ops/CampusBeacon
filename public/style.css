@@ -249,3 +249,15 @@ h1, h2, h3, h4, h5, h6, .navbar-brand {
   border-radius: 1rem;
   box-shadow: var(--cb-shadow);
 }
+.btn-cb, .btn-cb-outline {
+  display: inline-flex;
+  align-items: center;
+  gap: .4rem;
+}
+.btn .material-symbols-outlined {
+  font-size: 20px;
+  transition: transform .2s ease;
+}
+.btn:hover .material-symbols-outlined {
+  transform: translateX(5px);
+}
