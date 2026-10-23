@@ -1,0 +1,251 @@
+
+/* =========================================================
+   CampusBeacon theme  (Bootstrap 5.3 override)
+   Palette: deep forest green + amber on neutral stone — no blue tint
+   Fonts:   Bricolage Grotesque (headings) / Source Sans 3 (body)
+   ========================================================= */
+
+/* ---------- LIGHT ---------- */
+:root,
+[data-bs-theme="light"] {
+  --cb-gradient: linear-gradient(160deg, #ffffff 0%, #eef0ea 100%);
+  --cb-primary:       #1f5d50;
+  --cb-primary-hover: #17463d;
+  --cb-accent:        #e0a030;
+  --cb-bg:            #f2f3ef;
+  --cb-surface:       rgba(255, 255, 255, 0.90);
+  --cb-surface-solid: #ffffff;
+  --cb-text:          #1d2420;
+  --cb-muted:         #5f6b64;
+  --cb-border:        #d9ddd5;
+  --cb-overlay:       linear-gradient(rgba(242,243,239,.82), rgba(242,243,239,.90));
+  --cb-shadow:        0 14px 40px rgba(29, 36, 32, .14);
+
+  --bs-body-bg:       var(--cb-bg);
+  --bs-body-color:    var(--cb-text);
+  --bs-border-color:  var(--cb-border);
+  --bs-link-color:    var(--cb-primary);
+  --bs-link-hover-color: var(--cb-primary-hover);
+}
+
+/* ---------- DARK ---------- */
+[data-bs-theme="dark"] {
+  --cb-gradient: linear-gradient(160deg, #1a1f1c 0%, #0b0e0c 100%);
+  --cb-primary:       #4fb59f;
+  --cb-primary-hover: #6cc9b4;
+  --cb-accent:        #f0b84a;
+  --cb-bg:            #121614;
+  --cb-surface:       rgba(26, 31, 28, 0.88);
+  --cb-surface-solid: #1a1f1c;
+  --cb-text:          #e8ece6;
+  --cb-muted:         #9aa59d;
+  --cb-border:        #2e3731;
+  --cb-overlay:       linear-gradient(rgba(18,22,20,.80), rgba(18,22,20,.92));
+  --cb-shadow:        0 14px 40px rgba(0, 0, 0, .55);
+
+  --bs-body-bg:       var(--cb-bg);
+  --bs-body-color:    var(--cb-text);
+  --bs-border-color:  var(--cb-border);
+  --bs-link-color:    var(--cb-primary);
+  --bs-link-hover-color: var(--cb-primary-hover);
+}
+
+
+
+/* ---------- ORANGE ---------- */
+[data-cb-theme="orange"] {
+  --cb-primary:       #b84a0b;
+  --cb-primary-hover: #8f3806;
+  --cb-accent:        #7a2e00;
+  --cb-bg:            #f7a24f;
+  --cb-surface:       rgba(255, 245, 232, 0.93);
+  --cb-surface-solid: #fff7ec;
+  --cb-text:          #2b1708;
+  --cb-muted:         #6b4425;
+  --cb-border:        #e0a066;
+  --cb-shadow:        0 14px 40px rgba(122, 46, 0, .25);
+
+  --bs-body-bg:       var(--cb-bg);
+  --bs-body-color:    var(--cb-text);
+  --bs-border-color:  var(--cb-border);
+  --bs-link-color:    var(--cb-primary);
+  --bs-link-hover-color: var(--cb-primary-hover);
+}
+
+/* ---------- BASE ---------- */
+body {
+  font-family: 'Source Sans 3', system-ui, sans-serif;
+  font-size: 1.05rem;
+  line-height: 1.6;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  color: var(--cb-text);
+  /* Plain themed background for now.
+     LATER, to add your photo, replace the line below with:
+     background: var(--cb-overlay), url('../img/YOUR-IMAGE.jpg') center / cover fixed no-repeat, var(--cb-bg); */
+  background:
+      background: var(--cb-gradient);
+  background-attachment: fixed;
+  background-attachment: fixed;
+  transition: background-color .25s, color .25s;
+}
+
+h1, h2, h3, h4, h5, h6, .navbar-brand {
+  font-family: 'Bricolage Grotesque', 'Source Sans 3', sans-serif;
+  font-weight: 700;
+  letter-spacing: -0.015em;
+}
+
+.text-muted, .form-text { color: var(--cb-muted) !important; }
+
+/* ---------- NAVBAR ---------- */
+.cb-navbar {
+  background: var(--cb-surface);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--cb-border);
+  padding-block: .55rem;
+}
+.cb-brand-text { font-size: 1.35rem; color: var(--cb-text); }
+.cb-navbar .nav-link { color: var(--cb-text); font-weight: 500; border-radius: .5rem; padding: .45rem .8rem; }
+.cb-navbar .nav-link:hover,
+.cb-navbar .nav-link.active { color: var(--cb-primary); background: color-mix(in srgb, var(--cb-primary) 12%, transparent); }
+.navbar-toggler { border-color: var(--cb-border); }
+[data-bs-theme="dark"] .navbar-toggler-icon { filter: invert(1); }
+
+/* ---------- LAYOUT: centre the card ---------- */
+.cb-main { flex: 1; width: 100%; display: flex; align-items: center; justify-content: center; padding: 2.5rem 1rem; }
+.cb-main > * { width: 100%; max-width: 460px; }   /* whatever sits directly inside gets a proper width */
+.cb-center { width: 100%; max-width: 460px; }
+.cb-center.wide { max-width: 760px; }
+/* ---------- CARD ---------- */
+.cb-card {
+  background: var(--cb-surface);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid var(--cb-border);
+  border-radius: 1.1rem;
+  box-shadow: var(--cb-shadow);
+  padding: 2rem;
+}
+.cb-card h1, .cb-card h2 { font-size: 1.7rem; margin-bottom: .25rem; }
+
+/* ---------- FORMS ---------- */
+.form-label { font-weight: 600; }
+.form-control, .form-select {
+  background-color: var(--cb-surface-solid);
+  color: var(--cb-text);
+  border: 1px solid var(--cb-border);
+  border-radius: .65rem;
+  padding: .7rem .9rem;
+  transition: border-color .15s, box-shadow .15s;
+}
+.form-control::placeholder { color: var(--cb-muted); opacity: .8; }
+.form-control:focus, .form-select:focus {
+  background-color: var(--cb-surface-solid);
+  color: var(--cb-text);
+  border-color: var(--cb-primary);
+  box-shadow: 0 0 0 .22rem color-mix(in srgb, var(--cb-primary) 28%, transparent);
+}
+
+/* ---------- STANDARD BUTTONS ----------
+   Use ONLY these classes everywhere:
+   .btn.btn-cb          -> main action (Log in, Submit, Save)
+   .btn.btn-cb-outline  -> secondary action (Cancel, Back)
+   .btn.btn-cb-ghost    -> icon / low-emphasis buttons
+   .btn.btn-cb-danger   -> delete / destructive
+---------------------------------------------- */
+.btn { font-weight: 600; border-radius: .65rem; padding: .65rem 1.3rem; transition: transform .12s, background-color .15s, box-shadow .15s; }
+ 
+.btn:focus-visible { outline: 3px solid var(--cb-accent); outline-offset: 2px; }
+
+.btn-cb { background: var(--cb-primary); border: 1px solid var(--cb-primary); color: #fff; }
+[data-bs-theme="dark"] .btn-cb { color: #0c1411; }
+.btn-cb:hover { background: var(--cb-primary-hover); border-color: var(--cb-primary-hover); color: #fff; box-shadow: 0 6px 18px color-mix(in srgb, var(--cb-primary) 40%, transparent); }
+[data-bs-theme="dark"] .btn-cb:hover { color: #0c1411; }
+
+.btn-cb-outline { background: transparent; border: 1.5px solid var(--cb-primary); color: var(--cb-primary); }
+.btn-cb-outline:hover { background: var(--cb-primary); color: #fff; }
+[data-bs-theme="dark"] .btn-cb-outline:hover { color: #0c1411; }
+
+.btn-cb-ghost { background: transparent; border: 1px solid var(--cb-border); color: var(--cb-text); padding: .45rem .7rem; }
+.btn-cb-ghost:hover { background: color-mix(in srgb, var(--cb-primary) 14%, transparent); color: var(--cb-primary); }
+
+.btn-cb-danger { background: #b3382c; border: 1px solid #b3382c; color: #fff; }
+.btn-cb-danger:hover { background: #962d23; color: #fff; }
+
+/* ---------- ALERTS / TABLES ---------- */
+.alert { border-radius: .75rem; border-width: 1px; }
+.table { --bs-table-bg: transparent; --bs-table-color: var(--cb-text); }
+.table > :not(caption) > * > * { border-color: var(--cb-border); }
+
+/* ---------- FOOTER ---------- */
+.cb-footer { background: var(--cb-surface); border-top: 1px solid var(--cb-border); color: var(--cb-muted); }
+
+/* ---------- MOTION: one soft entrance for the main card ---------- */
+@keyframes cb-rise { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: none; } }
+.cb-card { animation: cb-rise .45s ease-out both; }
+@media (prefers-reduced-motion: reduce) { * { animation: none !important; transition: none !important; } }
+
+/* ---------- MOBILE ---------- */
+@media (max-width: 575.98px) { .cb-card { padding: 1.4rem; } .cb-main { padding: 1.5rem .75rem; } }
+
+
+
+/* ---------- THEME SWATCHES ---------- */
+.cb-swatches { display: flex; align-items: center; gap: .5rem; }
+.cb-swatch {
+  width: 22px; height: 22px; padding: 0;
+  border-radius: 50%;
+  border: 2px solid var(--cb-border);
+  cursor: pointer;
+  transition: transform .15s, box-shadow .15s;
+}
+.cb-swatch:hover { transform: scale(1.15); }
+.cb-swatch.active { box-shadow: 0 0 0 3px var(--cb-primary); }
+.cb-swatch[data-theme="light"]  { background: #ffffff; }
+.cb-swatch[data-theme="dark"]   { background: #121614; }
+.cb-swatch[data-theme="orange"] { background: #f7a24f; }
+
+
+
+
+
+/* ----------  CLICK EFFECTS ---------- */
+
+/* Home / Login links: font switches to the heading font and the link lifts */
+.cb-navbar .nav-link {
+  transition: transform .2s ease, color .2s, background-color .2s;
+}
+.cb-navbar .nav-link:hover {
+  font-family: 'Bricolage Grotesque', sans-serif;
+  font-weight: 700;
+  transform: translateY(-3px);
+}
+
+/* All buttons: lift on hover, pop when clicked */
+.btn {
+  font-family: 'Bricolage Grotesque', sans-serif;
+  letter-spacing: .01em;
+  transition: transform .2s ease, box-shadow .2s ease, background-color .2s;
+}
+.btn:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 10px 22px rgba(0, 0, 0, .22);
+}
+.btn:focus {
+  animation: cb-pop .35s ease;
+}
+@keyframes cb-pop {
+  0%   { transform: scale(1); }
+  45%  { transform: scale(1.12); }
+  100% { transform: scale(1); }
+}
+.card {
+  background: var(--cb-surface);
+  color: var(--cb-text);
+  border: 1px solid var(--cb-border);
+  border-radius: 1rem;
+  box-shadow: var(--cb-shadow);
+}
