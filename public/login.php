@@ -16,7 +16,7 @@
                 </div>
 
                 <div class="mt-4">
-                    <small><a href="forgot_password.php" class="text-decoration-none">reset passphrase</a></small>
+                    <small><a href="forgot_password.php" class="text-decoration-none">forgot password</a></small>
                 </div>
             </div>
         </div>
