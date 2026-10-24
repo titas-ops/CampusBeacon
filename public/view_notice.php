@@ -21,6 +21,8 @@ if ($notice) {
 }
 ?>
 <?php include 'header.php'; ?>
+<script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/dompurify@3.0.6/dist/purify.min.js"></script>
 <div class="row justify-content-center">
     <div class="col-md-8">
         <?php if (!$notice): ?>
@@ -31,9 +33,8 @@ if ($notice) {
                     <h2 class="card-title"><?php echo htmlspecialchars($notice['title']); ?></h2>
                     <p class="text-muted">Posted by <?php echo htmlspecialchars($notice['username']); ?> on <?php echo date('Y-m-d H:i', strtotime($notice['created_at'])); ?></p>
                     <hr>
-                    <div class="notice-content mb-4">
-                        <p><?php echo nl2br(htmlspecialchars($notice['content'])); ?></p>
-                    </div>
+                    <div class="notice-content mb-4" id="noticeContent"></div>
+                    <script>document.getElementById('noticeContent').innerHTML = DOMPurify.sanitize(marked.parse(<?php echo json_encode($notice['content']); ?>));</script>
                     <?php if (!empty($notice['pdf_data'])): ?>
                         <div class="alert alert-info">
                             <strong>Attached Document:</strong> <a href="stream_pdf.php?id=<?php echo $id; ?>" target="_blank">View PDF</a>

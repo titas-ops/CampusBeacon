@@ -21,10 +21,17 @@ requireRole('professor');
                         <label class="form-label">Notice Title</label>
                         <input type="text" name="title" class="form-control" placeholder="Enter a clear title" required>
                     </div>
-                    <div class="mb-3">
-                        <label class="form-label">Content (Markdown supported)</label>
-                        <textarea name="content" class="form-control" rows="6" placeholder="Write your notice here..."></textarea>
+                <div class="mb-3">
+                    <label class="form-label">Content (Markdown supported)</label>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <textarea name="content" id="mdInput" class="form-control" rows="12" placeholder="Write your notice here..."></textarea>
+                        </div>
+                        <div class="col-md-6">
+                            <div id="mdPreview" class="border rounded p-3" style="min-height:300px;overflow:auto;background:#fff;color:#222;"></div>
+                        </div>
                     </div>
+                </div>
                     <div class="mb-3">
                         <label class="form-label">Upload PDF (Optional)</label>
                         <input type="file" name="pdf_file" class="form-control" accept="application/pdf">
@@ -37,4 +44,25 @@ requireRole('professor');
         </div>
     </div>
 </div>
+<script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/dompurify@3.0.6/dist/purify.min.js"></script>
+<script>
+const input = document.getElementById('mdInput');
+const preview = document.getElementById('mdPreview');
+function render() {
+    preview.innerHTML = DOMPurify.sanitize(marked.parse(input.value || ''));
+}
+input.addEventListener('input', render);
+input.addEventListener('keydown', function(e) {
+    if (e.key === 'Tab' || e.keyCode === 9) {
+        e.preventDefault();
+        const start = input.selectionStart;
+        const end = input.selectionEnd;
+        input.value = input.value.substring(0, start) + '    ' + input.value.substring(end);
+        input.selectionStart = input.selectionEnd = start + 4;
+        render();
+    }
+});
+render();
+</script>
 <?php include '../../client/footer.php'; ?>
