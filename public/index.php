@@ -1,26 +1,28 @@
+<?php
+session_start();
+require_once '../database/db_connect.php';
+require_once '../server/auth_helpers.php';
+$result = $conn->query("SELECT n.id, n.title, n.content, n.created_at, u.username FROM notices n JOIN users u ON n.professor_id = u.id ORDER BY n.created_at DESC");
+$notices = $result ? $result->fetch_all(MYSQLI_ASSOC) : [];
+?>
 <?php include 'header.php'; ?>
 <div class="row">
     <div class="col-md-12">
         <h2 class="mb-4">Notices</h2>
-
-        <!-- Hardcoded Placeholder for a Notice Card -->
-        <div class="card mb-3 shadow-sm">
-            <div class="card-body">
-                <h5 class="card-title">Sample Notice: Semester Exams</h5>
-                <h6 class="card-subtitle mb-2 text-muted">Posted by Prof. Smith on 2026-10-20</h6>
-                <p class="card-text">This is a sample markdown notice. The exams will start from next Monday. Please check your hall tickets.</p>
-                <a href="view_notice.php?id=1" class="btn btn-primary btn-sm">View Details & Comments</a>
-            </div>
-        </div>
-
-        <div class="card mb-3 shadow-sm">
-            <div class="card-body">
-                <h5 class="card-title">Sample Notice: Holiday Announcement</h5>
-                <h6 class="card-subtitle mb-2 text-muted">Posted by Prof. Johnson on 2026-10-21</h6>
-                <p class="card-text">Please find the attached PDF for the revised holiday calendar for the current semester.</p>
-                <a href="view_notice.php?id=2" class="btn btn-primary btn-sm">View PDF & Details</a>
-            </div>
-        </div>
+        <?php if (empty($notices)): ?>
+            <p class="text-muted">No notices yet.</p>
+        <?php else: ?>
+            <?php foreach ($notices as $n): ?>
+                <div class="card mb-3 shadow-sm">
+                    <div class="card-body">
+                        <h5 class="card-title"><?php echo htmlspecialchars($n['title']); ?></h5>
+                        <h6 class="card-subtitle mb-2 text-muted">Posted by <?php echo htmlspecialchars($n['username']); ?> on <?php echo date('Y-m-d', strtotime($n['created_at'])); ?></h6>
+                        <p class="card-text"><?php echo htmlspecialchars(mb_substr($n['content'], 0, 200)); ?></p>
+                        <a href="view_notice.php?id=<?php echo (int)$n['id']; ?>" class="btn btn-primary btn-sm">View Details & Comments</a>
+                    </div>
+                </div>
+            <?php endforeach; ?>
+        <?php endif; ?>
     </div>
 </div>
 <?php include 'footer.php'; ?>
