@@ -5,7 +5,7 @@ require_once '../server/auth_helpers.php';
 $result = $conn->query("SELECT n.id, n.title, n.content, n.created_at, u.username FROM notices n JOIN users u ON n.professor_id = u.id ORDER BY n.created_at DESC");
 $notices = $result ? $result->fetch_all(MYSQLI_ASSOC) : [];
 ?>
-<?php include 'header.php'; ?>
+<?php include '../client/header.php'; ?>
 <div class="row">
     <div class="col-md-12">
         <h2 class="mb-4">Notices</h2>
@@ -25,4 +25,4 @@ $notices = $result ? $result->fetch_all(MYSQLI_ASSOC) : [];
         <?php endif; ?>
     </div>
 </div>
-<?php include 'footer.php'; ?>
+<?php include '../client/footer.php'; ?>

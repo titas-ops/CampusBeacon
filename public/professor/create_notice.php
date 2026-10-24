@@ -4,7 +4,7 @@ require_once '../../server/auth_helpers.php';
 require_once '../../database/db_connect.php';
 requireRole('professor');
 ?>
-<?php include '../../public/header.php'; ?>
+<?php include '../../client/header.php'; ?>
 <div class="row justify-content-center">
     <div class="col-md-8">
         <div class="card shadow">
@@ -37,4 +37,4 @@ requireRole('professor');
         </div>
     </div>
 </div>
-<?php include '../../public/footer.php'; ?>
+<?php include '../../client/footer.php'; ?>
