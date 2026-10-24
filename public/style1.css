@@ -249,3 +249,8 @@ a {
 .comments-list .border-bottom {
     border-color: var(--cb-border) !important;
 }
+
+/* ---------- Wider centered form (notice creation) ---------- */
+.cb-center > .cb-form-wide {
+    max-width: 720px;
+}
