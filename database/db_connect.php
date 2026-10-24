@@ -19,6 +19,14 @@ if ($conn->connect_error) {
 $conn->set_charset("utf8mb4");
 
 /**
+ * Migrate legacy comments.student_id -> user_id so professors can comment too.
+ */
+$legacyCol = $conn->query("SHOW COLUMNS FROM comments LIKE 'student_id'");
+if ($legacyCol && $legacyCol->num_rows > 0) {
+    $conn->query("ALTER TABLE comments CHANGE student_id user_id INT(11) UNSIGNED NOT NULL");
+}
+
+/**
  * The $conn variable is now available globally for all scripts that include this file.
  */
 ?>

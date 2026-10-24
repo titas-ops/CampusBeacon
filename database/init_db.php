@@ -46,11 +46,13 @@ $tables = [
     "comments" => "CREATE TABLE IF NOT EXISTS comments (
         id INT(11) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
         notice_id INT(11) UNSIGNED NOT NULL,
-        student_id INT(11) UNSIGNED NOT NULL,
+        user_id INT(11) UNSIGNED NOT NULL,
+        parent_id INT(11) UNSIGNED NULL,
         comment_text TEXT NOT NULL,
         created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
         FOREIGN KEY (notice_id) REFERENCES notices(id) ON DELETE CASCADE,
-        FOREIGN KEY (student_id) REFERENCES users(id) ON DELETE CASCADE
+        FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
+        FOREIGN KEY (parent_id) REFERENCES comments(id) ON DELETE CASCADE
     ) ENGINE=InnoDB"
 ];
 
