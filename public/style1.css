@@ -1,0 +1,256 @@
+/* ---------- Light mode ---------- */
+:root {
+    --cb-accent: #b3121b;
+    --cb-accent-hover: #8f0e15;
+    --cb-bg: #f7f3ee;
+    --cb-surface: #ffffff;
+    --cb-text: #2b2623;
+    --cb-muted: #6f6762;
+    --cb-border: #e3dbd2;
+    --cb-nav: #2a1f1d;
+    --cb-overlay: linear-gradient(rgba(247, 243, 238, 0.88), rgba(247, 243, 238, 0.88));
+
+    --bs-body-font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
+    --bs-body-color: var(--cb-text);
+    --bs-link-color: var(--cb-accent);
+    --bs-link-hover-color: var(--cb-accent-hover);
+    --bs-link-color-rgb: 179, 18, 27;
+    --bs-link-hover-color-rgb: 143, 14, 21;
+}
+
+/* ---------- Dark mode ---------- */
+[data-bs-theme="dark"] {
+    --cb-accent: #e5484d;
+    --cb-accent-hover: #f2656a;
+    --cb-bg: #161211;
+    --cb-surface: #221b1a;
+    --cb-text: #f1ebe6;
+    --cb-muted: #a89f98;
+    --cb-border: #3a302e;
+    --cb-nav: #0f0b0b;
+    --cb-overlay: linear-gradient(rgba(22, 18, 17, 0.86), rgba(22, 18, 17, 0.86));
+
+    --bs-body-bg: var(--cb-bg);
+    --bs-body-color: var(--cb-text);
+    --bs-link-color-rgb: 229, 72, 77;
+    --bs-link-hover-color-rgb: 242, 101, 106;
+}
+
+/* ---------- Base ---------- */
+html, body {
+    min-height: 100%;
+}
+
+body {
+    font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
+    color: var(--cb-text);
+    background:
+        var(--cb-overlay),
+        url('/CampusBeacon/public/images/background.jpg') center / cover fixed no-repeat,
+        var(--cb-bg);
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+body > .container {
+    flex: 1 0 auto;
+}
+
+h1, h2, h3, h4, h5, h6,
+.navbar-brand {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-weight: 700;
+    letter-spacing: 0.2px;
+}
+
+a {
+    text-decoration: none;
+}
+
+/* ---------- Navbar ---------- */
+.cb-navbar {
+    background-color: var(--cb-nav);
+    border-bottom: 3px solid var(--cb-accent);
+}
+
+.cb-navbar .navbar-brand {
+    font-size: 1.4rem;
+    color: #fff;
+}
+
+.cb-navbar .nav-link {
+    color: rgba(255, 255, 255, 0.82);
+    font-weight: 500;
+}
+
+.cb-navbar .nav-link:hover,
+.cb-navbar .nav-link:focus {
+    color: #fff;
+}
+
+/* ---------- Buttons (standard everywhere) ---------- */
+.btn {
+    font-weight: 600;
+    border-radius: 8px;
+    padding: 0.55rem 1.25rem;
+    transition: background-color 0.15s ease, border-color 0.15s ease, transform 0.1s ease;
+}
+
+.btn:active {
+    transform: translateY(1px);
+}
+
+.btn-sm {
+    padding: 0.35rem 0.8rem;
+}
+
+.btn-primary {
+    --bs-btn-bg: var(--cb-accent);
+    --bs-btn-border-color: var(--cb-accent);
+    --bs-btn-hover-bg: var(--cb-accent-hover);
+    --bs-btn-hover-border-color: var(--cb-accent-hover);
+    --bs-btn-active-bg: var(--cb-accent-hover);
+    --bs-btn-active-border-color: var(--cb-accent-hover);
+    --bs-btn-disabled-bg: var(--cb-accent);
+    --bs-btn-disabled-border-color: var(--cb-accent);
+    --bs-btn-color: #fff;
+    --bs-btn-hover-color: #fff;
+    --bs-btn-active-color: #fff;
+    --bs-btn-focus-shadow-rgb: 179, 18, 27;
+}
+
+.btn-outline-primary,
+.btn-secondary {
+    --bs-btn-color: var(--cb-accent);
+    --bs-btn-border-color: var(--cb-accent);
+    --bs-btn-bg: transparent;
+    --bs-btn-hover-bg: var(--cb-accent);
+    --bs-btn-hover-border-color: var(--cb-accent);
+    --bs-btn-hover-color: #fff;
+    --bs-btn-active-bg: var(--cb-accent-hover);
+    --bs-btn-active-border-color: var(--cb-accent-hover);
+    --bs-btn-active-color: #fff;
+}
+
+/* ---------- Cards, forms, tables ---------- */
+.card,
+.cb-card {
+    background-color: var(--cb-surface);
+    border: 1px solid var(--cb-border);
+    border-radius: 14px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+}
+
+.form-label {
+    font-weight: 600;
+}
+
+.form-control,
+.form-select {
+    background-color: var(--cb-surface);
+    color: var(--cb-text);
+    border: 1px solid var(--cb-border);
+    border-radius: 8px;
+    padding: 0.6rem 0.85rem;
+}
+
+.form-control:focus,
+.form-select:focus {
+    background-color: var(--cb-surface);
+    color: var(--cb-text);
+    border-color: var(--cb-accent);
+    box-shadow: 0 0 0 0.2rem rgba(179, 18, 27, 0.2);
+}
+
+.table {
+    --bs-table-bg: var(--cb-surface);
+    --bs-table-color: var(--cb-text);
+    --bs-table-border-color: var(--cb-border);
+}
+
+.text-muted {
+    color: var(--cb-muted) !important;
+}
+
+/* ---------- Center the div containing the input ---------- */
+.cb-center {
+    min-height: 65vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.cb-center > .card,
+.cb-center > .cb-card,
+.cb-form-box {
+    width: 100%;
+    max-width: 440px;
+    padding: 2rem;
+}
+
+/* ---------- Footer ---------- */
+.cb-footer {
+    margin-top: auto;
+    background-color: var(--cb-nav);
+    color: rgba(255, 255, 255, 0.8);
+    border-top: 3px solid var(--cb-accent);
+    font-size: 0.9rem;
+}
+
+/* ---------- Dark mode readability fixes ---------- */
+[data-bs-theme="dark"] .btn-primary {
+    --bs-btn-bg: #c4161f;
+    --bs-btn-border-color: #c4161f;
+    --bs-btn-hover-bg: #a8121a;
+    --bs-btn-hover-border-color: #a8121a;
+    --bs-btn-active-bg: #a8121a;
+    --bs-btn-active-border-color: #a8121a;
+    --bs-btn-color: #fff;
+}
+
+[data-bs-theme="dark"] .text-muted,
+[data-bs-theme="dark"] .text-secondary,
+[data-bs-theme="dark"] .text-body-secondary,
+[data-bs-theme="dark"] .card-subtitle {
+    color: #d2c8c0 !important;
+}
+
+[data-bs-theme="dark"] .card,
+[data-bs-theme="dark"] .cb-card {
+    background-color: rgba(34, 27, 26, 0.94);
+    border-color: #4a3e3b;
+}
+
+[data-bs-theme="dark"] .card-title,
+[data-bs-theme="dark"] .card-text,
+[data-bs-theme="dark"] .card h1,
+[data-bs-theme="dark"] .card h2,
+[data-bs-theme="dark"] .card h3,
+[data-bs-theme="dark"] .card h4,
+[data-bs-theme="dark"] .card h5 {
+    color: #f6f0eb;
+}
+
+/* ---------- Attachment box (replaces blue alert-info) ---------- */
+.cb-attachment {
+    padding: 0.85rem 1rem;
+    border-radius: 10px;
+    border: 1px solid var(--cb-border);
+    border-left: 4px solid var(--cb-accent);
+    background-color: rgba(179, 18, 27, 0.06);
+}
+
+[data-bs-theme="dark"] .cb-attachment {
+    background-color: rgba(229, 72, 77, 0.12);
+}
+
+/* ---------- Comments ---------- */
+.comments-list .border-bottom {
+    border-color: var(--cb-border) !important;
+}
+
+/* ---------- Wider centered form (notice creation) ---------- */
+.cb-center > .cb-form-wide {
+    max-width: 720px;
+}
