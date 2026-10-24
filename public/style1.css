@@ -231,3 +231,21 @@ a {
 [data-bs-theme="dark"] .card h5 {
     color: #f6f0eb;
 }
+
+/* ---------- Attachment box (replaces blue alert-info) ---------- */
+.cb-attachment {
+    padding: 0.85rem 1rem;
+    border-radius: 10px;
+    border: 1px solid var(--cb-border);
+    border-left: 4px solid var(--cb-accent);
+    background-color: rgba(179, 18, 27, 0.06);
+}
+
+[data-bs-theme="dark"] .cb-attachment {
+    background-color: rgba(229, 72, 77, 0.12);
+}
+
+/* ---------- Comments ---------- */
+.comments-list .border-bottom {
+    border-color: var(--cb-border) !important;
+}
