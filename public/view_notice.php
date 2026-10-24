@@ -1,5 +1,6 @@
 <?php
 session_start();
+date_default_timezone_set('Asia/Kolkata');
 require_once '../database/db_connect.php';
 require_once '../server/auth_helpers.php';
 $id = intval($_GET['id'] ?? 0);
@@ -37,10 +38,13 @@ if ($notice) {
         <?php else: ?>
             <div class="card shadow mb-4">
                 <div class="card-body">
-                    <h2 class="card-title"><?php echo htmlspecialchars($notice['title']); ?></h2>
-                    <p class="text-muted">Posted by <?php echo htmlspecialchars($notice['username']); ?> on <?php echo date('Y-m-d H:i', strtotime($notice['created_at'])); ?></p>
-                    <hr>
                     <div class="notice-content mb-4" id="noticeContent"></div>
+                    <div class="d-flex justify-content-end">
+                        <div class="text-end">
+                            <div>Prof: <?php echo htmlspecialchars($notice['username']); ?></div>
+                            <small class="text-muted">at <?php echo date('h:i A', strtotime($notice['created_at'])); ?> on <?php echo date('d M', strtotime($notice['created_at'])); ?></small>
+                        </div>
+                    </div>
                     <script>document.getElementById('noticeContent').innerHTML = DOMPurify.sanitize(marked.parse(<?php echo json_encode($notice['content']); ?>));</script>
                     <?php if (!empty($notice['pdf_data'])): ?>
                         <div class="alert alert-info">

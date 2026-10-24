@@ -11,7 +11,7 @@
     <!-- Custom CSS -->
     <link href="/CampusBeacon/client/style.css" rel="stylesheet">
     <style>
-        body { background-color: #f8f9fa; }
+        body { background-color: #f8f9fa; padding-bottom: 80px; }
         .navbar-brand { font-weight: bold; color: #0d6efd !important; }
     </style>
 </head>
@@ -29,6 +29,11 @@
                     <li class="nav-item">
                         <a class="nav-link" href="/CampusBeacon/public/index.php">Home</a>
                     </li>
+                    <?php if (($_SESSION['logged_in'] ?? false) === true && ($_SESSION['role'] ?? '') === 'professor'): ?>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/CampusBeacon/public/professor/create_notice.php">Create Notice</a>
+                    </li>
+                    <?php endif; ?>
                     <li class="nav-item me-3">
                         <button id="themeToggle" class="btn btn-sm theme-toggle" onclick="toggleTheme()">
                             <!-- Text set by theme.js -->

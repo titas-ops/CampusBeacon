@@ -5,11 +5,10 @@ require_once '../../database/db_connect.php';
 requireRole('professor');
 ?>
 <?php include '../../client/header.php'; ?>
-<div class="row justify-content-center">
+<div class="row justify-content-center" style="padding:0 10px;">
     <div class="col-md-8">
         <div class="card shadow">
-            <div class="card-body">
-                <h3 class="text-center mb-4">Create New Notice</h3>
+            <div class="card-body" style="padding-left:0;padding-right:0;">
                 <?php if (isset($_GET['success'])): ?>
                     <div class="alert alert-success">Notice created successfully!</div>
                 <?php endif; ?>
@@ -17,17 +16,16 @@ requireRole('professor');
                     <div class="alert alert-danger">Failed to create notice. Please try again.</div>
                 <?php endif; ?>
                 <form action="../../server/notices.php" method="POST" enctype="multipart/form-data">
-                    <div class="mb-3">
-                        <label class="form-label">Notice Title</label>
-                        <input type="text" name="title" class="form-control" placeholder="Enter a clear title" required>
-                    </div>
                 <div class="mb-3">
-                    <label class="form-label">Content (Markdown supported)</label>
-                    <div class="row">
+                    
+                    <div class="row" style="padding:10px 10px;">
+                        
                         <div class="col-md-6">
-                            <textarea name="content" id="mdInput" class="form-control" rows="12" placeholder="Write your notice here..."></textarea>
+                            <label class="form-label">Content (Markdown supported)</label>
+                            <textarea name="content" id="mdInput" class="form-control" rows="12" maxlength="300" placeholder="Write your notice here..."></textarea>
                         </div>
                         <div class="col-md-6">
+                            <label class="form-label">Preview</label>
                             <div id="mdPreview" class="border rounded p-3" style="min-height:300px;overflow:auto;background:#fff;color:#222;"></div>
                         </div>
                     </div>
@@ -52,7 +50,16 @@ const preview = document.getElementById('mdPreview');
 function render() {
     preview.innerHTML = DOMPurify.sanitize(marked.parse(input.value || ''));
 }
-input.addEventListener('input', render);
+input.addEventListener('input', function() {
+    const lines = input.value.split('\n');
+    if (lines.length > 0 && lines[0].trim() !== '' && !lines[0].trim().startsWith('#')) {
+        const pos = input.selectionStart;
+        lines[0] = '# ' + lines[0];
+        input.value = lines.join('\n');
+        input.selectionStart = input.selectionEnd = pos + 2;
+    }
+    render();
+});
 input.addEventListener('keydown', function(e) {
     if (e.key === 'Tab' || e.keyCode === 9) {
         e.preventDefault();

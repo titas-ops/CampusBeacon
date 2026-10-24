@@ -17,6 +17,13 @@ function handleCreateNotice() {
     global $conn;
     $title = trim($_POST['title'] ?? '');
     $content = trim($_POST['content'] ?? '');
+    $content = mb_substr($content, 0, 300);
+
+    if (empty($title) && !empty($content)) {
+        $firstLine = strtok($content, "\n");
+        $title = trim(ltrim($firstLine, '# '));
+        if ($title === '') $title = 'Untitled Notice';
+    }
 
     if (empty($title)) {
         header("Location: ../public/professor/create_notice.php?error=empty_title");
