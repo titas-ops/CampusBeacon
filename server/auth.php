@@ -43,15 +43,19 @@ function handleProfessorLogin() {
         exit();
     }
 
-    $stmt = $conn->prepare("SELECT id, username, password, role FROM users WHERE email = ? AND role = 'professor'");
-    $stmt->bind_param("s", $email);
+    $stmt = $conn->prepare("SELECT id, username, password, role FROM users WHERE (email = ? OR username = ?) AND (role = 'professor' OR role = 'admin')");
+    $stmt->bind_param("ss", $email, $email);
     $stmt->execute();
     $result = $stmt->get_result();
 
     if ($user = $result->fetch_assoc()) {
         if (password_verify($password, $user['password'])) {
             setSession($user);
-            header("Location: ../public/professor/create_notice.php");
+            if ($user['role'] === 'admin') {
+                header("Location: ../public/admin/dashboard.php");
+            } else {
+                header("Location: ../public/professor/create_notice.php");
+            }
             exit();
         }
     }

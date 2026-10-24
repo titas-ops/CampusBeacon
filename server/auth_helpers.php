@@ -28,7 +28,7 @@ function hasRole($role) {
  */
 function requireRole($role) {
     if (!isLoggedIn()) {
-        header("Location: ../public/login.php?error=please_login");
+        header("Location: /CampusBeacon/public/login.php?error=please_login");
         exit();
     }
 
@@ -36,11 +36,11 @@ function requireRole($role) {
         // Redirect unauthorized users to a generic error or their own dashboard
         $currentRole = $_SESSION['role'];
         if ($currentRole === 'professor') {
-            header("Location: ../public/professor/dashboard.php?error=unauthorized");
+            header("Location: /CampusBeacon/public/professor/dashboard.php?error=unauthorized");
         } elseif ($currentRole === 'student') {
-            header("Location: ../public/index.php?error=unauthorized");
+            header("Location: /CampusBeacon/public/index.php?error=unauthorized");
         } else {
-            header("Location: ../public/login.php?error=unauthorized");
+            header("Location: /CampusBeacon/public/login.php?error=unauthorized");
         }
         exit();
     }
