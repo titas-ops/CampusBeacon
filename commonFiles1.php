@@ -8,3 +8,5 @@
 
 <!-- Project er nijer CSS (Bootstrap er pore thakte hobe) -->
 <link href="/CampusBeacon/public/style.css" rel="stylesheet">
+<!-- Bootstrap Icons -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
