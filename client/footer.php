@@ -1,6 +1,6 @@
-    <footer class="bg-white text-center py-4 mt-auto border-top">
+    <footer class="bg-white text-center py-4 mt-auto border-top fixed-bottom">
         <div class="container">
-            <p class="text-muted mb-0">&copy; <?php echo date('Y'); ?> CampusBeacon</p>
+            <p class="text-dark mb-0">&copy; <?php echo date('Y'); ?> CampusBeacon</p>
         </div>
     </footer>
 
