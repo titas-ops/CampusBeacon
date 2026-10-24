@@ -6,6 +6,7 @@ $result = $conn->query("SELECT n.id, n.title, n.content, n.created_at, u.usernam
 $notices = $result ? $result->fetch_all(MYSQLI_ASSOC) : [];
 ?>
 <?php include '../client/header.php'; ?>
+<div class="container mt-4">
 <div class="row">
     <div class="col-md-12">
         <h2 class="mb-4">Notices</h2>
@@ -24,5 +25,6 @@ $notices = $result ? $result->fetch_all(MYSQLI_ASSOC) : [];
             <?php endforeach; ?>
         <?php endif; ?>
     </div>
+</div>
 </div>
 <?php include '../client/footer.php'; ?>
