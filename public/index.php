@@ -1,5 +1,6 @@
 <?php
 session_start();
+date_default_timezone_set('Asia/Kolkata');
 require_once '../database/db_connect.php';
 require_once '../server/auth_helpers.php';
 $result = $conn->query("SELECT n.id, n.title, n.content, n.created_at, u.username FROM notices n JOIN users u ON n.professor_id = u.id ORDER BY n.created_at DESC");
@@ -16,10 +17,8 @@ $notices = $result ? $result->fetch_all(MYSQLI_ASSOC) : [];
             <?php foreach ($notices as $n): ?>
                 <div class="card mb-3 shadow-sm">
                     <div class="card-body">
-                        <h5 class="card-title"><?php echo htmlspecialchars($n['title']); ?></h5>
-                        <h6 class="card-subtitle mb-2 text-muted">Posted by <?php echo htmlspecialchars($n['username']); ?> on <?php echo date('Y-m-d', strtotime($n['created_at'])); ?></h6>
                         <p class="card-text md-excerpt" data-md="<?php echo htmlspecialchars($n['content'], ENT_QUOTES); ?>"></p>
-                        <a href="view_notice.php?id=<?php echo (int)$n['id']; ?>" class="btn btn-primary btn-sm">View Details & Comments</a>
+                        <a href="view_notice.php?id=<?php echo (int)$n['id']; ?>" class="btn btn-primary btn-sm">View Details & Comments</a><span class="card-subtitle mb-2 text-muted"> - Prof: <?php echo htmlspecialchars($n['username']); ?> at <?php echo date('h:i A', strtotime($n['created_at'])); ?> on <?php echo date('d M', strtotime($n['created_at'])); ?></span>
                     </div>
                 </div>
             <?php endforeach; ?>
