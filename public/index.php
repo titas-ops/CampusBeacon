@@ -8,8 +8,8 @@ $notices = $result ? $result->fetch_all(MYSQLI_ASSOC) : [];
 ?>
 <?php include '../client/header.php'; ?>
 <div class="container mt-4">
-<div class="row">
-    <div class="col-md-12">
+<div class="row justify-content-center">
+    <div class="col-md-6">
         <h2 class="mb-4">Notices</h2>
         <?php if (empty($notices)): ?>
             <p class="text-muted">No notices yet.</p>
@@ -18,7 +18,13 @@ $notices = $result ? $result->fetch_all(MYSQLI_ASSOC) : [];
                 <div class="card mb-3 shadow-sm">
                     <div class="card-body">
                         <p class="card-text md-excerpt" data-md="<?php echo htmlspecialchars($n['content'], ENT_QUOTES); ?>"></p>
-                        <a href="view_notice.php?id=<?php echo (int)$n['id']; ?>" class="btn btn-primary btn-sm">View Details & Comments</a><span class="card-subtitle mb-2 text-muted"> - Prof: <?php echo htmlspecialchars($n['username']); ?> at <?php echo date('h:i A', strtotime($n['created_at'])); ?> on <?php echo date('d M', strtotime($n['created_at'])); ?></span>
+                        <div class="d-flex justify-content-between align-items-center mt-2">
+                            <a href="view_notice.php?id=<?php echo (int)$n['id']; ?>" class="btn btn-primary btn-sm">View Details & Comments</a>
+                            <div class="text-end">
+                                <div>Prof: <?php echo htmlspecialchars($n['username']); ?></div>
+                                <small class="text-muted">at <?php echo date('h:i A', strtotime($n['created_at'])); ?> on <?php echo date('d M', strtotime($n['created_at'])); ?></small>
+                            </div>
+                        </div>
                     </div>
                 </div>
             <?php endforeach; ?>
