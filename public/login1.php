@@ -14,6 +14,9 @@
             </div>
 
             <div class="mt-4">
+                <small>New student? <a href="signup.php">Sign up here</a></small>
+            </div>
+            <div class="mt-2">
                 <small><a href="forgot_password.php">Reset password</a></small>
             </div>
         </div>
