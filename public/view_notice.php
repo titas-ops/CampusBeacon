@@ -23,6 +23,13 @@ if ($notice) {
 <?php include 'header.php'; ?>
 <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/dompurify@3.0.6/dist/purify.min.js"></script>
+<style>
+.notice-content h1{font-size:2rem;font-weight:700;margin:.75rem 0 .5rem}
+.notice-content h2{font-size:1.75rem;font-weight:700;margin:.75rem 0 .5rem}
+.notice-content h3{font-size:1.5rem;font-weight:700;margin:.75rem 0 .5rem}
+.notice-content h4{font-size:1.25rem;font-weight:700;margin:.75rem 0 .5rem}
+.notice-content p{font-size:1rem;line-height:1.6}
+</style>
 <div class="row justify-content-center">
     <div class="col-md-8">
         <?php if (!$notice): ?>

@@ -18,7 +18,7 @@ $notices = $result ? $result->fetch_all(MYSQLI_ASSOC) : [];
                     <div class="card-body">
                         <h5 class="card-title"><?php echo htmlspecialchars($n['title']); ?></h5>
                         <h6 class="card-subtitle mb-2 text-muted">Posted by <?php echo htmlspecialchars($n['username']); ?> on <?php echo date('Y-m-d', strtotime($n['created_at'])); ?></h6>
-                        <p class="card-text"><?php echo htmlspecialchars(mb_substr($n['content'], 0, 200)); ?></p>
+                        <p class="card-text md-excerpt" data-md="<?php echo htmlspecialchars($n['content'], ENT_QUOTES); ?>"></p>
                         <a href="view_notice.php?id=<?php echo (int)$n['id']; ?>" class="btn btn-primary btn-sm">View Details & Comments</a>
                     </div>
                 </div>
@@ -28,3 +28,11 @@ $notices = $result ? $result->fetch_all(MYSQLI_ASSOC) : [];
 </div>
 </div>
 <?php include '../client/footer.php'; ?>
+<script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/dompurify@3.0.6/dist/purify.min.js"></script>
+<script>
+document.querySelectorAll('.md-excerpt').forEach(function(el){
+    const md = el.getAttribute('data-md') || '';
+    el.innerHTML = DOMPurify.sanitize(marked.parse(md));
+});
+</script>
