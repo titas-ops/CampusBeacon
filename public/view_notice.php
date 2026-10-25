@@ -97,13 +97,13 @@ document.addEventListener('DOMContentLoaded', function(){
                 <div class="card-body">
                     <h4>Comments</h4>
                     <hr>
-                    <div class="comments-list mb-4">
+                    <div class="comments-list mb-4" id="comments-section">
                         <?php if ($notice): ?>
                             <?php renderComments($byParent ?? [], null); ?>
                         <?php endif; ?>
                     </div>
                     <?php if (isLoggedIn() && (hasRole('student') || hasRole('professor'))): ?>
-                        <form action="../server/comments.php" method="POST">
+                        <form hx-post="../server/comments.php" hx-target="#comments-section" hx-swap="innerHTML" onsubmit="this.reset()">
                             <input type="hidden" name="notice_id" value="<?php echo $id; ?>">
                             <div class="mb-3">
                                 <textarea name="comment" class="form-control" rows="3" placeholder="Add your comment..." required></textarea>

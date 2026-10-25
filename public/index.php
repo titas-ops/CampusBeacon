@@ -25,7 +25,7 @@ $notices = $result ? $result->fetch_all(MYSQLI_ASSOC) : [];
                                 <?php if (isset($_SESSION['logged_in']) && $_SESSION['logged_in'] && $_SESSION['role'] === 'professor' && (int)$n['professor_id'] === (int)$_SESSION['user_id']): ?>
                                     <div class="mb-1">
                                         <a href="edit_notice.php?id=<?php echo (int)$n['id']; ?>" class="btn btn-outline-warning btn-sm me-1">Edit</a>
-                                        <a href="delete_notice.php?id=<?php echo (int)$n['id']; ?>" class="btn btn-outline-danger btn-sm" onclick="return confirm('Are you sure you want to delete this notice?')">Delete</a>
+                                        <button class="btn btn-outline-danger btn-sm" onclick="confirmDelete(<?php echo (int)$n['id']; ?>)">Delete</button>
                                     </div>
                                 <?php endif; ?>
                                 <div>Prof: <?php echo htmlspecialchars($n['username']); ?></div>
@@ -41,10 +41,61 @@ $notices = $result ? $result->fetch_all(MYSQLI_ASSOC) : [];
 </div>
 <?php include '../client/footer.php'; ?>
 <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+<script>
+function confirmDelete(noticeId) {
+    Swal.fire({
+        title: 'Are you sure?',
+        text: "You won't be able to revert this!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, delete it!'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            window.location.href = 'delete_notice.php?id=' + noticeId;
+        }
+    })
+}
+</script>
 <script src="https://cdn.jsdelivr.net/npm/dompurify@3.0.6/dist/purify.min.js"></script>
+<script>
+function confirmDelete(noticeId) {
+    Swal.fire({
+        title: 'Are you sure?',
+        text: "You won't be able to revert this!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, delete it!'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            window.location.href = 'delete_notice.php?id=' + noticeId;
+        }
+    })
+}
+</script>
 <script>
 document.querySelectorAll('.md-excerpt').forEach(function(el){
     const md = el.getAttribute('data-md') || '';
     el.innerHTML = DOMPurify.sanitize(marked.parse(md));
 });
+</script>
+<script>
+function confirmDelete(noticeId) {
+    Swal.fire({
+        title: 'Are you sure?',
+        text: "You won't be able to revert this!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, delete it!'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            window.location.href = 'delete_notice.php?id=' + noticeId;
+        }
+    })
+}
 </script>
