@@ -8,6 +8,12 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Bootstrap Icons -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css" rel="stylesheet">
+    <!-- Google Fonts: Poppins & Roboto -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
+    <!-- SweetAlert2 CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
     <!-- Custom CSS -->
     <link href="/CampusBeacon/client/style.css" rel="stylesheet">
     <style>
@@ -15,23 +21,23 @@
         .navbar-brand { font-weight: bold; color: #60a5fa !important; }
     </style>
 </head>
-<body data-theme="dark" style="background-color:#121212!important;color:#f5f5f5!important;">
-    <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm mb-4">
-        <div class="container">
-            <a class="navbar-brand" href="/CampusBeacon/public/index.php">
-                <i class="bi bi-megaphone-fill me-2"></i>CampusBeacon
+<body data-theme="dark" style="background-color:#121212!important;color:#f5f5f5!important;padding-top:80px;padding-bottom:80px;">
+    <nav class="navbar navbar-expand-lg shadow-sm mb-4 fixed-top d-flex align-items-center" style="background-color:#1f2937!important;border-bottom:1px solid #374151!important;padding-top:0.75rem;padding-bottom:0.75rem;min-height:56px;">
+        <div class="container d-flex align-items-center justify-content-between">
+            <a class="navbar-brand mb-0" href="/CampusBeacon/public/index.php">
+                <span style="color:#7A2F25;">CampusBeacon</span>
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
                 <span class="navbar-toggler-icon"></span>
             </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav ms-auto align-items-center">
+            <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+                <ul class="navbar-nav align-items-center">
                     <li class="nav-item">
-                        <a class="nav-link" href="/CampusBeacon/public/index.php">Home</a>
+                        <a class="nav-link" href="/CampusBeacon/public/index.php" style="color:#F9F6FA!important;">Home</a>
                     </li>
                     <?php if (($_SESSION['logged_in'] ?? false) === true && ($_SESSION['role'] ?? '') === 'professor'): ?>
                     <li class="nav-item">
-                        <a class="nav-link" href="/CampusBeacon/public/professor/create_notice.php">Create Notice</a>
+                        <a class="nav-link" href="/CampusBeacon/public/professor/create_notice.php" style="color:#F9F6FA!important;">Create Notice</a>
                     </li>
                     <?php endif; ?>
                     <li class="nav-item me-3">
@@ -49,4 +55,8 @@
             </div>
         </div>
     </nav>
+    <!-- SweetAlert2 JS -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <!-- HTMX -->
+    <script src="https://unpkg.com/htmx.org@1.9.10"></script>
 </body>
