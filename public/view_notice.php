@@ -30,11 +30,21 @@ if ($notice) {
         foreach ($byParent[$parentId] as $c) {
             $margin = $depth * 20;
             echo '<div class="mb-3 p-2 border-bottom comment-tree" data-userid="'.$c['user_id'].'" style="margin-left:'.$margin.'px;">';
-            echo '<strong>'.htmlspecialchars($c['username']).' ('.htmlspecialchars($c['role']).'):</strong>';
+            echo '<div class="d-flex justify-content-between align-items-center">';
+            $roleLabel = ($c['role'] === 'professor') ? 'Prof' : 'Student';
+            echo '<strong>'.$roleLabel.': '.htmlspecialchars($c['username']).'</strong>';
+            if (isset($_SESSION['logged_in']) && $_SESSION['logged_in'] === true && (int)$_SESSION['user_id'] === (int)$c['user_id']) {
+                echo '<a href="delete_comment.php?id='.$c['id'].'&notice_id='.$GLOBALS['id'].'" class="text-danger small" onclick="return confirmDeleteComment()">Delete</a>';
+            }
+            echo '</div>';
             echo '<p class="mb-1">'.htmlspecialchars($c['comment_text']).'</p>';
-            echo '<small class="text-muted">'.date('Y-m-d H:i', strtotime($c['created_at'])).'</small>';
+            echo '<div class="d-flex align-items-center gap-2">';
+            echo '<small class="text-muted">at '.date('h:i A', strtotime($c['created_at'])).' on '.date('d M', strtotime($c['created_at'])).'</small>';
             if (isset($_SESSION['logged_in']) && $_SESSION['logged_in'] === true) {
-                echo ' <a href="#" class="reply-link small" data-id="'.$c['id'].'">Reply</a>';
+                echo '<a href="#" class="reply-link small" style="text-decoration:none; font-size: 0.8rem; color:#f0ead6 !important; font-weight: bold;" data-id="'.$c['id'].'">Reply</a>';
+            }
+            echo '</div>';
+            if (isset($_SESSION['logged_in']) && $_SESSION['logged_in'] === true) {
                 echo '<form class="reply-form mt-2" data-parent="'.$c['id'].'" style="display:none;" method="POST" action="../server/comments.php">';
                 echo '<input type="hidden" name="notice_id" value="'.$GLOBALS['id'].'">';
                 echo '<input type="hidden" name="parent_id" value="'.$c['id'].'">';
@@ -103,7 +113,7 @@ document.addEventListener('DOMContentLoaded', function(){
                         <?php endif; ?>
                     </div>
                     <?php if (isLoggedIn() && (hasRole('student') || hasRole('professor'))): ?>
-                        <form hx-post="../server/comments.php" hx-target="#comments-section" hx-swap="innerHTML" onsubmit="this.reset()">
+                        <form action="../server/comments.php" method="POST">
                             <input type="hidden" name="notice_id" value="<?php echo $id; ?>">
                             <div class="mb-3">
                                 <textarea name="comment" class="form-control" rows="3" placeholder="Add your comment..." required></textarea>

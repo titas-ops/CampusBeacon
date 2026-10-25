@@ -1,6 +1,6 @@
-    <footer class="bg-white text-center py-4 mt-auto border-top fixed-bottom">
+    <footer class="text-center py-3 mt-5 border-top fixed-bottom" style="background-color:#1f2937!important;color:#F9F6FA!important;border-color:#374151!important;">
         <div class="container">
-            <p class="text-dark mb-0">&copy; <?php echo date('Y'); ?> CampusBeacon</p>
+            <p class="mb-0" style="color:#F9F6FA!important;">&copy; <?php echo date('Y'); ?> <a href="https://github.com/titas-ops/CampusBeacon/blob/main/LICENSE" style="color:#F9F6FA!important;text-decoration:none;">CampusBeacon</a></p>
         </div>
     </footer>
 

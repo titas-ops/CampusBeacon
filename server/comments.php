@@ -25,12 +25,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if ($parent_id <= 0) $parent_id = null;
 
     if ($notice_id <= 0 || $comment === '') {
-        if (isset($_SERVER['HTTP_HX_REQUEST'])) {
-            http_response_code(400);
-            echo "Comment cannot be empty";
-        } else {
-            header("Location: ../public/view_notice.php?id=$notice_id&error=empty_comment");
-        }
+        header("Location: ../public/view_notice.php?id=$notice_id&error=empty_comment");
         exit();
     }
     $user_id = (int) $_SESSION['user_id'];
@@ -43,19 +38,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
     $stmt->execute();
     $stmt->close();
-
-    if (isset($_SERVER['HTTP_HX_REQUEST'])) {
-        // HTMX Request: We need to return the updated comments list
-        // Instead of re-implementing renderComments here, we will tell HTMX to
-        // trigger a refresh of the comments-list div using a simple redirect or
-        // just let the frontend handle the "Success" state.
-        // For the best UX, we'll return a "Success" indicator or the updated list.
-        // But the simplest HTMX pattern is to redirect the target.
-        header("HX-Refresh: true");
-        echo "Comment posted!";
-    } else {
-        header("Location: ../public/view_notice.php?id=$notice_id");
-    }
+    header("Location: ../public/view_notice.php?id=$notice_id");
     exit();
 }
 ?>
