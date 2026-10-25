@@ -12,13 +12,40 @@ if ($id > 0) {
     $notice = $stmt->get_result()->fetch_assoc();
     $stmt->close();
 }
-$comments = [];
 if ($notice) {
-    $cstmt = $conn->prepare("SELECT c.*, u.username FROM comments c JOIN users u ON c.student_id = u.id WHERE c.notice_id = ? ORDER BY c.created_at ASC");
+    $cstmt = $conn->prepare("SELECT c.*, u.username, u.role FROM comments c JOIN users u ON c.user_id = u.id WHERE c.notice_id = ? ORDER BY c.created_at ASC");
     $cstmt->bind_param("i", $id);
     $cstmt->execute();
-    $comments = $cstmt->get_result()->fetch_all(MYSQLI_ASSOC);
+    $allComments = $cstmt->get_result()->fetch_all(MYSQLI_ASSOC);
     $cstmt->close();
+
+    // Build tree
+    $byParent = [];
+    foreach ($allComments as $c) {
+        $pid = $c['parent_id'] ?? null;
+        $byParent[$pid][] = $c;
+    }
+    function renderComments($byParent, $parentId, $depth = 0) {
+        if (empty($byParent[$parentId])) return;
+        foreach ($byParent[$parentId] as $c) {
+            $margin = $depth * 20;
+            echo '<div class="mb-3 p-2 border-bottom comment-tree" data-userid="'.$c['user_id'].'" style="margin-left:'.$margin.'px;">';
+            echo '<strong>'.htmlspecialchars($c['username']).' ('.htmlspecialchars($c['role']).'):</strong>';
+            echo '<p class="mb-1">'.htmlspecialchars($c['comment_text']).'</p>';
+            echo '<small class="text-muted">'.date('Y-m-d H:i', strtotime($c['created_at'])).'</small>';
+            if (isset($_SESSION['logged_in']) && $_SESSION['logged_in'] === true) {
+                echo ' <a href="#" class="reply-link small" data-id="'.$c['id'].'">Reply</a>';
+                echo '<form class="reply-form mt-2" data-parent="'.$c['id'].'" style="display:none;" method="POST" action="../server/comments.php">';
+                echo '<input type="hidden" name="notice_id" value="'.$GLOBALS['id'].'">';
+                echo '<input type="hidden" name="parent_id" value="'.$c['id'].'">';
+                echo '<textarea name="comment" class="form-control form-control-sm mb-1" rows="2" required></textarea>';
+                echo '<button type="submit" class="btn btn-sm btn-primary">Reply</button>';
+                echo '</form>';
+            }
+            echo '</div>';
+            renderComments($byParent, $c['id'], $depth + 1);
+        }
+    }
 }
 ?>
 <?php include 'header.php'; ?>
@@ -30,7 +57,20 @@ if ($notice) {
 .notice-content h3{font-size:1.5rem;font-weight:700;margin:.75rem 0 .5rem}
 .notice-content h4{font-size:1.25rem;font-weight:700;margin:.75rem 0 .5rem}
 .notice-content p{font-size:1rem;line-height:1.6}
+.comment-tree{padding-left:1rem;border-left:3px solid #dee2e6;margin-left:1rem}
 </style>
+<script>
+document.addEventListener('DOMContentLoaded', function(){
+    document.querySelectorAll('.reply-link').forEach(function(link){
+        link.addEventListener('click', function(e){
+            e.preventDefault();
+            var parentId = this.getAttribute('data-id');
+            var form = document.querySelector('.reply-form[data-parent="'+parentId+'"]');
+            if(form) form.style.display = form.style.display === 'none' ? 'block' : 'none';
+        });
+    });
+});
+</script>
 <div class="row justify-content-center">
     <div class="col-md-8">
         <?php if (!$notice): ?>
@@ -55,21 +95,14 @@ if ($notice) {
             </div>
             <div class="card shadow">
                 <div class="card-body">
-                    <h4>Student Comments</h4>
+                    <h4>Comments</h4>
                     <hr>
                     <div class="comments-list mb-4">
-                        <?php foreach ($comments as $c): ?>
-                            <div class="mb-3 p-2 border-bottom">
-                                <strong><?php echo htmlspecialchars($c['username']); ?>:</strong>
-                                <p class="mb-1"><?php echo htmlspecialchars($c['comment_text']); ?></p>
-                                <small class="text-muted"><?php echo date('Y-m-d H:i', strtotime($c['created_at'])); ?></small>
-                            </div>
-                        <?php endforeach; ?>
-                        <?php if (empty($comments)): ?>
-                            <p class="text-muted">No comments yet.</p>
+                        <?php if ($notice): ?>
+                            <?php renderComments($byParent ?? [], null); ?>
                         <?php endif; ?>
                     </div>
-                    <?php if (isLoggedIn() && hasRole('student')): ?>
+                    <?php if (isLoggedIn() && (hasRole('student') || hasRole('professor'))): ?>
                         <form action="../server/comments.php" method="POST">
                             <input type="hidden" name="notice_id" value="<?php echo $id; ?>">
                             <div class="mb-3">
@@ -78,7 +111,7 @@ if ($notice) {
                             <button type="submit" class="btn btn-primary btn-sm">Post Comment</button>
                         </form>
                     <?php else: ?>
-                        <p class="text-muted"><a href="login.php">Login</a> as a student to comment.</p>
+                        <p class="text-muted"><a href="login.php">Login</a> as a student or professor to comment.</p>
                     <?php endif; ?>
                 </div>
             </div>

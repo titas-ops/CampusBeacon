@@ -7,6 +7,7 @@ $result = $conn->query("SELECT n.id, n.title, n.content, n.created_at, u.usernam
 $notices = $result ? $result->fetch_all(MYSQLI_ASSOC) : [];
 ?>
 <?php include '../client/header.php'; ?>
+<style>body, html { background-color: #121212 !important; color: #f5f5f5 !important; }</style>
 <div class="container mt-4">
 <div class="row justify-content-center">
     <div class="col-md-6">

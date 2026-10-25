@@ -26,7 +26,7 @@ requireRole('professor');
                         </div>
                         <div class="col-md-6">
                             <label class="form-label">Preview</label>
-                            <div id="mdPreview" class="border rounded p-3" style="min-height:300px;overflow:auto;background:#fff;color:#222;"></div>
+                            <div id="mdPreview" class="border rounded p-3" style="min-height:300px;overflow:auto;background:#1f2937;color:#f5f5f5;"></div>
                         </div>
                     </div>
                 </div>

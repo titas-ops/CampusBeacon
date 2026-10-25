@@ -11,11 +11,11 @@
     <!-- Custom CSS -->
     <link href="/CampusBeacon/client/style.css" rel="stylesheet">
     <style>
-        body { background-color: #f8f9fa; padding-bottom: 80px; }
-        .navbar-brand { font-weight: bold; color: #0d6efd !important; }
+        body { background-color: #121212 !important; padding-bottom: 80px; }
+        .navbar-brand { font-weight: bold; color: #60a5fa !important; }
     </style>
 </head>
-<body>
+<body data-theme="dark" style="background-color:#121212!important;color:#f5f5f5!important;">
     <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm mb-4">
         <div class="container">
             <a class="navbar-brand" href="/CampusBeacon/public/index.php">
@@ -35,9 +35,6 @@
                     </li>
                     <?php endif; ?>
                     <li class="nav-item me-3">
-                        <button id="themeToggle" class="btn btn-sm theme-toggle" onclick="toggleTheme()">
-                            <!-- Text set by theme.js -->
-                        </button>
                     </li>
                     <?php if (isset($_SESSION['logged_in']) && $_SESSION['logged_in'] === true): ?>
                         <li class="nav-item">
