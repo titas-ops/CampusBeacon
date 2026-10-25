@@ -32,12 +32,12 @@ if ($notice) {
             echo '<div class="mb-3 p-2 border-bottom comment-tree" data-userid="'.$c['user_id'].'" style="margin-left:'.$margin.'px;">';
             echo '<div class="d-flex justify-content-between align-items-center">';
             $roleLabel = ($c['role'] === 'professor') ? 'Prof' : 'Student';
-            echo '<strong>'.$roleLabel.': '.htmlspecialchars($c['username']).'</strong>';
+            echo '<strong style="color: var(--text-color) !important;">'.$roleLabel.': '.htmlspecialchars($c['username']).'</strong>';
             if (isset($_SESSION['logged_in']) && $_SESSION['logged_in'] === true && (int)$_SESSION['user_id'] === (int)$c['user_id']) {
                 echo '<a href="delete_comment.php?id='.$c['id'].'&notice_id='.$GLOBALS['id'].'" class="text-danger small" onclick="return confirmDeleteComment()">Delete</a>';
             }
             echo '</div>';
-            echo '<p class="mb-1">'.htmlspecialchars($c['comment_text']).'</p>';
+            echo '<p class="mb-1" style="color: var(--text-color) !important;">'.htmlspecialchars($c['comment_text']).'</p>';
             echo '<div class="d-flex align-items-center gap-2">';
             echo '<small class="text-muted">at '.date('h:i A', strtotime($c['created_at'])).' on '.date('d M', strtotime($c['created_at'])).'</small>';
             if (isset($_SESSION['logged_in']) && $_SESSION['logged_in'] === true) {
@@ -58,16 +58,16 @@ if ($notice) {
     }
 }
 ?>
-<?php include 'header.php'; ?>
+<?php include '../client/header.php'; ?>
 <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/dompurify@3.0.6/dist/purify.min.js"></script>
 <style>
-.notice-content h1{font-size:2rem;font-weight:700;margin:.75rem 0 .5rem}
-.notice-content h2{font-size:1.75rem;font-weight:700;margin:.75rem 0 .5rem}
-.notice-content h3{font-size:1.5rem;font-weight:700;margin:.75rem 0 .5rem}
-.notice-content h4{font-size:1.25rem;font-weight:700;margin:.75rem 0 .5rem}
-.notice-content p{font-size:1rem;line-height:1.6}
-.comment-tree{padding-left:1rem;border-left:3px solid #dee2e6;margin-left:1rem}
+.notice-content h1{font-size:2rem;font-weight:700;margin:.75rem 0 .5rem; color: var(--text-color) !important;}
+.notice-content h2{font-size:1.75rem;font-weight:700;margin:.75rem 0 .5rem; color: var(--text-color) !important;}
+.notice-content h3{font-size:1.5rem;font-weight:700;margin:.75rem 0 .5rem; color: var(--text-color) !important;}
+.notice-content h4{font-size:1.25rem;font-weight:700;margin:.75rem 0 .5rem; color: var(--text-color) !important;}
+.notice-content p{font-size:1rem;line-height:1.6; color: var(--text-color) !important;}
+.comment-tree{padding-left:1rem;border-left:3px solid var(--border-color);margin-left:1rem}
 </style>
 <script>
 document.addEventListener('DOMContentLoaded', function(){
@@ -81,51 +81,53 @@ document.addEventListener('DOMContentLoaded', function(){
     });
 });
 </script>
-<div class="row justify-content-center">
-    <div class="col-md-8">
-        <?php if (!$notice): ?>
-            <div class="alert alert-danger">Notice not found.</div>
-        <?php else: ?>
-            <div class="card shadow mb-4">
-                <div class="card-body">
-                    <div class="notice-content mb-4" id="noticeContent"></div>
-                    <div class="d-flex justify-content-end">
-                        <div class="text-end">
-                            <div>Prof: <?php echo htmlspecialchars($notice['username']); ?></div>
-                            <small class="text-muted">at <?php echo date('h:i A', strtotime($notice['created_at'])); ?> on <?php echo date('d M', strtotime($notice['created_at'])); ?></small>
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <?php if (!$notice): ?>
+                <div class="alert alert-danger">Notice not found.</div>
+            <?php else: ?>
+                <div class="card shadow mb-4">
+                    <div class="card-body">
+                        <div class="notice-content mb-4" id="noticeContent"></div>
+                        <div class="d-flex justify-content-end">
+                            <div class="text-end">
+                                <div style="color: var(--text-color) !important;">Prof: <?php echo htmlspecialchars($notice['username']); ?></div>
+                                <small class="text-muted">at <?php echo date('h:i A', strtotime($notice['created_at'])); ?> on <?php echo date('d M', strtotime($notice['created_at'])); ?></small>
+                            </div>
                         </div>
-                    </div>
-                    <script>document.getElementById('noticeContent').innerHTML = DOMPurify.sanitize(marked.parse(<?php echo json_encode($notice['content']); ?>));</script>
-                    <?php if (!empty($notice['pdf_data'])): ?>
-                        <div class="alert alert-info">
-                            <strong>Attached Document:</strong> <a href="stream_pdf.php?id=<?php echo $id; ?>" target="_blank">View PDF</a>
-                        </div>
-                    <?php endif; ?>
-                </div>
-            </div>
-            <div class="card shadow">
-                <div class="card-body">
-                    <h4>Comments</h4>
-                    <hr>
-                    <div class="comments-list mb-4" id="comments-section">
-                        <?php if ($notice): ?>
-                            <?php renderComments($byParent ?? [], null); ?>
+                        <script>document.getElementById('noticeContent').innerHTML = DOMPurify.sanitize(marked.parse(<?php echo json_encode($notice['content']); ?>));</script>
+                        <?php if (!empty($notice['pdf_data'])): ?>
+                            <div class="alert alert-info" style="background-color: #1a1a1a !important; border: 1px solid var(--border-color) !important; color: var(--text-color) !important;">
+                                <strong style="color: var(--text-color) !important;">Attached Document:</strong> <a href="stream_pdf.php?id=<?php echo $id; ?>" target="_blank" style="color: var(--accent-color) !important;">View PDF</a>
+                            </div>
                         <?php endif; ?>
                     </div>
-                    <?php if (isLoggedIn() && (hasRole('student') || hasRole('professor'))): ?>
-                        <form action="../server/comments.php" method="POST">
-                            <input type="hidden" name="notice_id" value="<?php echo $id; ?>">
-                            <div class="mb-3">
-                                <textarea name="comment" class="form-control" rows="3" placeholder="Add your comment..." required></textarea>
-                            </div>
-                            <button type="submit" class="btn btn-primary btn-sm">Post Comment</button>
-                        </form>
-                    <?php else: ?>
-                        <p class="text-muted"><a href="login.php">Login</a> as a student or professor to comment.</p>
-                    <?php endif; ?>
                 </div>
-            </div>
-        <?php endif; ?>
+                <div class="card shadow">
+                    <div class="card-body">
+                        <h4 style="color: var(--text-color) !important;">Comments</h4>
+                        <hr style="border-color: var(--border-color) !important;">
+                        <div class="comments-list mb-4" id="comments-section">
+                            <?php if ($notice): ?>
+                                <?php renderComments($byParent ?? [], null); ?>
+                            <?php endif; ?>
+                        </div>
+                        <?php if (isLoggedIn() && (hasRole('student') || hasRole('professor'))): ?>
+                            <form action="../server/comments.php" method="POST">
+                                <input type="hidden" name="notice_id" value="<?php echo $id; ?>">
+                                <div class="mb-3">
+                                    <textarea name="comment" class="form-control" rows="3" placeholder="Add your comment..." required></textarea>
+                                </div>
+                                <button type="submit" class="btn btn-primary btn-sm">Post Comment</button>
+                            </form>
+                        <?php else: ?>
+                            <p class="text-muted"><a href="login.php" style="color: var(--text-color) !important;">Login</a> as a student or professor to comment.</p>
+                        <?php endif; ?>
+                    </div>
+                </div>
+            <?php endif; ?>
+        </div>
     </div>
 </div>
-<?php include 'footer.php'; ?>
+<?php include '../client/footer.php'; ?>

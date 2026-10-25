@@ -27,9 +27,9 @@ $professors = $conn->query("SELECT id, username, email, created_at FROM users WH
 <?php include '../../client/header.php'; ?>
 
 <div class="container mt-5">
-    <div class="d-flex justify-content-between align-items-center mb-4 pb-2 border-bottom">
-        <h2 class="fw-bold text-dark"><i class="bi bi-shield-lock"></i> Admin Dashboard</h2>
-        <a href="../index.php" class="btn btn-outline-secondary btn-sm">
+    <div class="d-flex justify-content-between align-items-center mb-4 pb-2 border-bottom" style="border-color: var(--border-color) !important;">
+        <h2 class="fw-bold" style="color: var(--text-color) !important;"><i class="bi bi-shield-lock"></i> Admin Dashboard</h2>
+        <a href="../index.php" class="btn btn-sm" style="color: var(--text-color) !important; border: 1px solid var(--border-color) !important; border-radius: 50px; background: transparent;">
             <i class="bi bi-house"></i> Back to Home
         </a>
     </div>
@@ -37,26 +37,26 @@ $professors = $conn->query("SELECT id, username, email, created_at FROM users WH
     <!-- Stats Section -->
     <div class="row mb-5">
         <div class="col-md-4">
-            <div class="card bg-primary text-white shadow-sm">
-                <div class="card-body text-center">
-                    <h5>Total Professors</h5>
-                    <h2 class="display-4"><?php echo $prof_count; ?></h2>
+            <div class="card text-center py-4 shadow-sm" style="background-color: var(--card-bg) !important;">
+                <div class="card-body">
+                    <h5 class="text-muted mb-2">Total Professors</h5>
+                    <h2 class="display-4 fw-bold" style="color: var(--text-color) !important;"><?php echo $prof_count; ?></h2>
                 </div>
             </div>
         </div>
         <div class="col-md-4">
-            <div class="card bg-success text-white shadow-sm">
-                <div class="card-body text-center">
-                    <h5>Total Students</h5>
-                    <h2 class="display-4"><?php echo $stud_count; ?></h2>
+            <div class="card text-center py-4 shadow-sm" style="background-color: var(--card-bg) !important;">
+                <div class="card-body">
+                    <h5 class="text-muted mb-2">Total Students</h5>
+                    <h2 class="display-4 fw-bold" style="color: var(--text-color) !important;"><?php echo $stud_count; ?></h2>
                 </div>
             </div>
         </div>
         <div class="col-md-4">
-            <div class="card bg-info text-white shadow-sm">
-                <div class="card-body text-center">
-                    <h5>Total Notices</h5>
-                    <h2 class="display-4"><?php echo $notice_count; ?></h2>
+            <div class="card text-center py-4 shadow-sm" style="background-color: var(--card-bg) !important;">
+                <div class="card-body">
+                    <h5 class="text-muted mb-2">Total Notices</h5>
+                    <h2 class="display-4 fw-bold" style="color: var(--text-color) !important;"><?php echo $notice_count; ?></h2>
                 </div>
             </div>
         </div>
@@ -64,7 +64,7 @@ $professors = $conn->query("SELECT id, username, email, created_at FROM users WH
 
     <!-- Feedback Alerts -->
     <?php if (isset($_GET['success'])): ?>
-        <div class="alert alert-success alert-dismissible fade show" role="alert">
+        <div class="alert alert-success alert-dismissible fade show" role="alert" style="background-color: rgba(74, 222, 128, 0.1) !important; border: 1px solid var(--success-color) !important; color: var(--success-color) !important;">
             <?php
                 if ($_GET['success'] === 'professor_added') echo "New professor account created successfully!";
                 elseif ($_GET['success'] === 'professor_deleted') echo "Professor account removed successfully.";
@@ -75,7 +75,7 @@ $professors = $conn->query("SELECT id, username, email, created_at FROM users WH
     <?php endif; ?>
 
     <?php if (isset($_GET['error'])): ?>
-        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        <div class="alert alert-danger alert-dismissible fade show" role="alert" style="background-color: rgba(248, 113, 113, 0.1) !important; border: 1px solid var(--error-color) !important; color: var(--error-color) !important;">
             <?php
                 if ($_GET['error'] === 'empty_fields') echo "Please fill in all required fields.";
                 elseif ($_GET['error'] === 'duplicate_user') echo "A user with this email already exists.";
@@ -87,35 +87,35 @@ $professors = $conn->query("SELECT id, username, email, created_at FROM users WH
     <?php endif; ?>
 
     <!-- Professor Management -->
-    <div class="card shadow">
-        <div class="card-header bg-white d-flex justify-content-between align-items-center">
-            <h4 class="mb-0">Manage Professors</h4>
+    <div class="card shadow" style="background-color: var(--card-bg) !important;">
+        <div class="card-header d-flex justify-content-between align-items-center py-3" style="background-color: #0f0f0f !important; border-bottom: 1px solid var(--border-color) !important;">
+            <h4 class="mb-0" style="color: var(--text-color) !important;">Manage Professors</h4>
             <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addProfModal">
                 <i class="bi bi-plus-lg"></i> Add Professor
             </button>
         </div>
-        <div class="card-body">
+        <div class="card-body p-0">
             <div class="table-responsive">
-                <table class="table table-hover align-middle">
-                    <thead class="table-light">
-                        <tr>
-                            <th>Username</th>
-                            <th>Email</th>
-                            <th>Joined Date</th>
-                            <th class="text-center">Actions</th>
+                <table class="table table-hover align-middle mb-0" style="color: var(--text-color) !important; background-color: var(--card-bg) !important;">
+                    <thead style="background-color: #0f0f0f !important; border-bottom: 1px solid var(--border-color) !important;">
+                        <tr style="background-color: #0f0f0f !important;">
+                            <th class="px-4 py-3" style="color: var(--text-color) !important; font-weight: 600; background-color: #0f0f0f !important;">Username</th>
+                            <th class="py-3" style="color: var(--text-color) !important; font-weight: 600; background-color: #0f0f0f !important;">Email</th>
+                            <th class="py-3" style="color: var(--text-color) !important; font-weight: 600; background-color: #0f0f0f !important;">Joined Date</th>
+                            <th class="text-center px-4 py-3" style="color: var(--text-color) !important; font-weight: 600; background-color: #0f0f0f !important;">Actions</th>
                         </tr>
                     </thead>
-                    <tbody>
+                    <tbody style="background-color: var(--card-bg) !important;">
                         <?php if ($professors->num_rows > 0): ?>
                             <?php while($row = $professors->fetch_assoc()): ?>
-                                <tr>
-                                    <td><?php echo htmlspecialchars($row['username']); ?></td>
-                                    <td><?php echo htmlspecialchars($row['email']); ?></td>
-                                    <td><?php echo date('M d, Y', strtotime($row['created_at'])); ?></td>
-                                    <td class="text-center">
+                                <tr style="border-bottom: 1px solid var(--border-color) !important; background-color: var(--card-bg) !important;">
+                                    <td class="px-4" style="background-color: var(--card-bg) !important; color: #ffffff !important;"><?php echo htmlspecialchars($row['username']); ?></td>
+                                    <td style="background-color: var(--card-bg) !important; color: #ffffff !important;"><?php echo htmlspecialchars($row['email']); ?></td>
+                                    <td style="background-color: var(--card-bg) !important; color: #ffffff !important;"><?php echo date('M d, Y', strtotime($row['created_at'])); ?></td>
+                                    <td class="text-center px-4" style="background-color: var(--card-bg) !important;">
                                         <form action="../../server/admin_manager.php" method="POST" onsubmit="return confirm('Are you sure you want to delete this professor?');" style="display:inline;">
                                             <input type="hidden" name="professor_id" value="<?php echo $row['id']; ?>">
-                                            <button type="submit" name="delete_professor" class="btn btn-sm btn-outline-danger">
+                                            <button type="submit" name="delete_professor" class="btn btn-sm btn-outline-danger" style="border-radius: 50px;">
                                                 <i class="bi bi-trash"></i> Delete
                                             </button>
                                         </form>
@@ -123,8 +123,8 @@ $professors = $conn->query("SELECT id, username, email, created_at FROM users WH
                                 </tr>
                             <?php endwhile; ?>
                         <?php else: ?>
-                            <tr>
-                                <td colspan="4" class="text-center text-muted">No professors found.</td>
+                            <tr style="background-color: var(--card-bg) !important;">
+                                <td colspan="4" class="text-center py-5 text-muted" style="background-color: var(--card-bg) !important;">No professors found.</td>
                             </tr>
                         <?php endif; ?>
                     </tbody>
@@ -136,12 +136,12 @@ $professors = $conn->query("SELECT id, username, email, created_at FROM users WH
     <!-- Add Professor Modal -->
     <div class="modal fade" id="addProfModal" tabindex="-1" aria-labelledby="addProfModalLabel" aria-hidden="true">
         <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="addProfModalLabel">Add New Professor</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            <div class="modal-content" style="background-color: var(--card-bg) !important; border: 1px solid var(--border-color) !important; color: var(--text-color) !important;">
+                <div class="modal-header" style="border-bottom: 1px solid var(--border-color) !important;">
+                    <h5 class="modal-title" id="addProfModalLabel" style="color: var(--text-color) !important;">Add New Professor</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <div class="modal-body">
+                <div class="modal-body p-4">
                     <form action="../../server/admin_manager.php" method="POST">
                         <div class="mb-3">
                             <label class="form-label">Username</label>
