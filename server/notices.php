@@ -32,7 +32,24 @@ function handleCreateNotice() {
 
     $pdf_data = null;
     if (isset($_FILES['pdf_file']) && $_FILES['pdf_file']['error'] === UPLOAD_ERR_OK) {
-        $tmp = $_FILES['pdf_file']['tmp_name'];
+        $file = $_FILES['pdf_file'];
+
+        // 1. Validate File Size (Limit to 5MB)
+        $max_size = 5 * 1024 * 1024;
+        if ($file['size'] > $max_size) {
+            header("Location: ../public/professor/create_notice.php?error=file_too_large");
+            exit();
+        }
+
+        // 2. Validate MIME Type (Must be application/pdf)
+        $finfo = new finfo(FILEINFO_MIME_TYPE);
+        $mime_type = $finfo->file($file['tmp_name']);
+        if ($mime_type !== 'application/pdf') {
+            header("Location: ../public/professor/create_notice.php?error=invalid_file_type");
+            exit();
+        }
+
+        $tmp = $file['tmp_name'];
         $pdf_data = file_get_contents($tmp);
     }
 
