@@ -178,7 +178,7 @@ function confirmDeleteProfessor(profId) {
                     <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body p-4">
-                    <form action="../../server/admin_manager.php" method="POST">
+                    <form action="../../server/admin_manager.php" method="POST" id="adminProfForm">
                         <div class="mb-3">
                             <label class="form-label">Username</label>
                             <input type="text" name="username" class="form-control" required>
@@ -189,7 +189,8 @@ function confirmDeleteProfessor(profId) {
                         </div>
                         <div class="mb-3">
                             <label class="form-label">Password</label>
-                            <input type="password" name="password" class="form-control" required>
+                            <input type="password" name="password" id="adminProfPassword" class="form-control" required>
+                            <div id="adminProfPasswordErrors" class="mt-2" style="font-size: 0.85rem;"></div>
                         </div>
                         <div class="d-grid">
                             <button type="submit" name="add_professor" class="btn btn-primary">Create Professor Account</button>
@@ -199,6 +200,31 @@ function confirmDeleteProfessor(profId) {
             </div>
         </div>
     </div>
+    <script src="/CampusBeacon/client/password-validation.js"></script>
+    <script>
+    document.getElementById('adminProfForm').addEventListener('submit', function(e) {
+        const password = document.getElementById('adminProfPassword').value;
+        const errorDiv = document.getElementById('adminProfPasswordErrors');
+        const errors = validatePassword(password);
+
+        if (errors.length > 0) {
+            e.preventDefault();
+            errorDiv.innerHTML = errors.map(err => `<div class="text-error">• ${err}</div>`).join('');
+            return false;
+        }
+        errorDiv.innerHTML = '';
+    });
+
+    document.getElementById('adminProfPassword').addEventListener('input', function() {
+        const errors = validatePassword(this.value);
+        const errorDiv = document.getElementById('adminProfPasswordErrors');
+        if (errors.length > 0) {
+            errorDiv.innerHTML = errors.map(err => `<div class="text-error">• ${err}</div>`).join('');
+        } else {
+            errorDiv.innerHTML = '<div class="text-success">✓ Password is strong enough!</div>';
+        }
+    });
+    </script>
 </div>
 
 <?php include '../../public/footer.php'; ?>

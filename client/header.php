@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CampusBeacon</title>
+    <link rel="icon" type="image/png" href="/CampusBeacon/client/favicon_and_logo.png">
     <!-- Bootstrap 5 CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Bootstrap Icons -->
@@ -32,8 +33,9 @@
 <body data-theme="dark" style="background-color:#111111!important;color:#d1d5db!important;padding-top:80px;padding-bottom:80px;">
     <nav class="navbar navbar-expand-lg shadow-sm mb-4 fixed-top d-flex align-items-center" style="background-color:#0f0f0f!important;border-bottom:1px solid #2d2d2d!important;padding-top:0.75rem;padding-bottom:0.75rem;min-height:56px;">
         <div class="container d-flex align-items-center justify-content-between">
-            <a class="navbar-brand mb-0" href="/CampusBeacon/public/index.php">
-                <span>Campus Beacon</span>
+            <a class="navbar-brand mb-0 d-flex align-items-center" href="/CampusBeacon/public/index.php">
+                <img src="/CampusBeacon/client/favicon_and_logo.png" alt="CampusBeacon Logo" style="width: 32px; height: 32px; margin-right: 10px;">
+                <span>CampusBeacon</span>
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
                 <span class="navbar-toggler-icon"></span>
