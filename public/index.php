@@ -11,7 +11,7 @@ $notices = $result ? $result->fetch_all(MYSQLI_ASSOC) : [];
 <div class="container mt-4">
 <div class="row justify-content-center">
     <div class="col-md-6">
-        <h2 class="mb-4" style="color: var(--text-color) !important;">Notices</h2>
+        <h2 class="mb-4 text-soft-white">Notices</h2>
         <?php if (empty($notices)): ?>
             <p class="text-muted">No notices yet.</p>
         <?php else: ?>
@@ -37,7 +37,7 @@ $notices = $result ? $result->fetch_all(MYSQLI_ASSOC) : [];
                                         <?php endif; ?>
                                     </div>
                                 <?php endif; ?>
-                                <div style="color: var(--text-color) !important;">Prof: <?php echo htmlspecialchars($n['username']); ?></div>
+                                <div class="text-soft-white">Prof: <?php echo htmlspecialchars($n['username']); ?></div>
                                 <small class="text-muted">at <?php echo date('h:i A', strtotime($n['created_at'])); ?> on <?php echo date('d M', strtotime($n['created_at'])); ?></small>
                             </div>
                         </div>

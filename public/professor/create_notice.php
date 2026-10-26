@@ -11,28 +11,28 @@ requireRole('professor');
             <div class="card shadow" style="height: 100%; display: flex; flex-direction: column;">
                 <div class="card-body p-4 d-flex flex-column">
                     <?php if (isset($_GET['success'])): ?>
-                        <div class="alert alert-success" style="background-color: rgba(74, 222, 128, 0.1) !important; border: 1px solid var(--success-color) !important; color: var(--success-color) !important;">Notice created successfully!</div>
+                        <div class="alert alert-success text-success" style="background-color: rgba(74, 222, 128, 0.1) !important; border: 1px solid var(--success-color) !important;">Notice created successfully!</div>
                     <?php endif; ?>
                     <?php if (isset($_GET['error'])): ?>
-                        <div class="alert alert-danger" style="background-color: rgba(248, 113, 113, 0.1) !important; border: 1px solid var(--error-color) !important; color: var(--error-color) !important;">Failed to create notice. Please try again.</div>
+                        <div class="alert alert-danger text-error" style="background-color: rgba(248, 113, 113, 0.1) !important; border: 1px solid var(--error-color) !important;">Failed to create notice. Please try again.</div>
                     <?php endif; ?>
 
                     <form action="../../server/notices.php" method="POST" enctype="multipart/form-data" class="d-flex flex-column h-100">
                         <div class="mb-4 flex-grow-1">
                             <div class="row h-100">
                                 <div class="col-md-6 d-flex flex-column">
-                                    <label class="form-label" style="color: var(--text-color) !important;">Content (Markdown supported)</label>
+                                    <label class="form-label text-soft-white">Content (Markdown supported)</label>
                                     <textarea name="content" id="mdInput" class="form-control flex-grow-1" style="height: 100% !important; min-height: 400px !important;" maxlength="300" placeholder="Write your notice here..." required></textarea>
                                 </div>
                                 <div class="col-md-6 d-flex flex-column">
-                                    <label class="form-label" style="color: var(--text-color) !important;">Preview</label>
-                                    <div id="mdPreview" class="border rounded p-3 flex-grow-1" style="height: 100% !important; min-height: 400px !important; overflow:auto; background: var(--card-bg) !important; color: var(--text-color) !important; border-color: var(--border-color) !important;"></div>
+                                    <label class="form-label text-soft-white">Preview</label>
+                                    <div id="mdPreview" class="border rounded p-3 flex-grow-1 bg-card text-soft-white border-theme" style="height: 100% !important; min-height: 400px !important; overflow:auto;"></div>
                                 </div>
                             </div>
                         </div>
                         <div class="row align-items-center mb-0">
                             <div class="col-md-8">
-                                <label class="form-label" style="color: var(--text-color) !important;">Upload PDF (Optional)</label>
+                                <label class="form-label text-soft-white">Upload PDF (Optional)</label>
                                 <div class="d-flex align-items-center">
                                     <input type="file" name="pdf_file" id="pdfUpload" class="form-control form-control-sm" accept="application/pdf" style="width: auto; max-width: 300px;">
                                 </div>

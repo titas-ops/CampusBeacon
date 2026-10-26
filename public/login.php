@@ -4,12 +4,12 @@
         <div class="col-12" style="max-width: 60%;">
             <div class="d-grid gap-3">
                 <div class="text-center">
-                    <a href="login_professor.php" class="btn btn-view-details py-5 w-100" style="font-size: 2.5rem !important; border-radius: 12px !important; color: var(--accent-color) !important; font-weight: 700 !important;">
+                    <a href="login_professor.php" class="btn btn-view-details py-5 w-100 text-accent" style="font-size: 2.5rem !important; border-radius: 12px !important; font-weight: 700 !important;">
                         Professor Login
                     </a>
                 </div>
                 <div class="text-center">
-                    <a href="login_student.php" class="btn btn-view-details py-5 w-100" style="font-size: 2.5rem !important; border-radius: 12px !important; color: var(--success-color) !important; font-weight: 700 !important;">
+                    <a href="login_student.php" class="btn btn-view-details py-5 w-100 text-success" style="font-size: 2.5rem !important; border-radius: 12px !important; font-weight: 700 !important;">
                         Student Login
                     </a>
                 </div>

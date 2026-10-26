@@ -57,6 +57,7 @@ function handleAddProfessor() {
  * Deletes a professor account.
  */
 function handleDeleteProfessor() {
+    global $conn;
     $professor_id = intval($_POST['professor_id'] ?? 0);
 
     if ($professor_id <= 0) {

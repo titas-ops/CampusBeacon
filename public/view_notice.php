@@ -32,12 +32,12 @@ if ($notice) {
             echo '<div class="mb-3 p-2 border-bottom comment-tree" data-userid="'.$c['user_id'].'" style="margin-left:'.$margin.'px;">';
             echo '<div class="d-flex justify-content-between align-items-center">';
             $roleLabel = ($c['role'] === 'professor') ? 'Prof' : 'Student';
-            echo '<strong style="color: var(--text-color) !important;">'.$roleLabel.': '.htmlspecialchars($c['username']).'</strong>';
+            echo '<strong class="text-soft-white">'.$roleLabel.': '.htmlspecialchars($c['username']).'</strong>';
             if (isset($_SESSION['logged_in']) && $_SESSION['logged_in'] === true && (int)$_SESSION['user_id'] === (int)$c['user_id']) {
                 echo '<a href="delete_comment.php?id='.$c['id'].'&notice_id='.$GLOBALS['id'].'" class="text-danger small" onclick="return confirmDeleteComment()">Delete</a>';
             }
             echo '</div>';
-            echo '<p class="mb-1" style="color: var(--text-color) !important;">'.htmlspecialchars($c['comment_text']).'</p>';
+            echo '<p class="mb-1 text-soft-white">'.htmlspecialchars($c['comment_text']).'</p>';
             echo '<div class="d-flex align-items-center gap-2">';
             echo '<small class="text-muted">at '.date('h:i A', strtotime($c['created_at'])).' on '.date('d M', strtotime($c['created_at'])).'</small>';
             if (isset($_SESSION['logged_in']) && $_SESSION['logged_in'] === true) {
@@ -92,22 +92,22 @@ document.addEventListener('DOMContentLoaded', function(){
                         <div class="notice-content mb-4" id="noticeContent"></div>
                         <div class="d-flex justify-content-end">
                             <div class="text-end">
-                                <div style="color: var(--text-color) !important;">Prof: <?php echo htmlspecialchars($notice['username']); ?></div>
+                                <div class="text-soft-white">Prof: <?php echo htmlspecialchars($notice['username']); ?></div>
                                 <small class="text-muted">at <?php echo date('h:i A', strtotime($notice['created_at'])); ?> on <?php echo date('d M', strtotime($notice['created_at'])); ?></small>
                             </div>
                         </div>
                         <script>document.getElementById('noticeContent').innerHTML = DOMPurify.sanitize(marked.parse(<?php echo json_encode($notice['content']); ?>));</script>
                         <?php if (!empty($notice['pdf_data'])): ?>
-                            <div class="alert alert-info" style="background-color: #1a1a1a !important; border: 1px solid var(--border-color) !important; color: var(--text-color) !important;">
-                                <strong style="color: var(--text-color) !important;">Attached Document:</strong> <a href="stream_pdf.php?id=<?php echo $id; ?>" target="_blank" style="color: var(--accent-color) !important;">View PDF</a>
+                            <div class="alert alert-info bg-card border-theme text-soft-white">
+                                <strong class="text-soft-white">Attached Document:</strong> <a href="stream_pdf.php?id=<?php echo $id; ?>" target="_blank" class="text-accent">View PDF</a>
                             </div>
                         <?php endif; ?>
                     </div>
                 </div>
                 <div class="card shadow">
                     <div class="card-body">
-                        <h4 style="color: var(--text-color) !important;">Comments</h4>
-                        <hr style="border-color: var(--border-color) !important;">
+                        <h4 class="text-soft-white">Comments</h4>
+                        <hr class="border-theme">
                         <div class="comments-list mb-4" id="comments-section">
                             <?php if ($notice): ?>
                                 <?php renderComments($byParent ?? [], null); ?>
@@ -122,7 +122,7 @@ document.addEventListener('DOMContentLoaded', function(){
                                 <button type="submit" class="btn btn-primary btn-sm">Post Comment</button>
                             </form>
                         <?php else: ?>
-                            <p class="text-muted"><a href="login.php" style="color: var(--text-color) !important;">Login</a> as a student or professor to comment.</p>
+                            <p class="text-muted"><a href="login.php" class="text-soft-white">Login</a> as a student or professor to comment.</p>
                         <?php endif; ?>
                     </div>
                 </div>
