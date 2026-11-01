@@ -1,5 +1,3 @@
-/* CampusBeacon - Password Validation */
-
 function validatePassword(password) {
     const errors = [];
 

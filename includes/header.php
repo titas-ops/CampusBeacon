@@ -30,7 +30,7 @@
         }
     </style>
 </head>
-<body data-theme="dark" style="background-color:#111111!important;color:#d1d5db!important;padding-top:80px;padding-bottom:80px;">
+<body data-theme="dark" class="d-flex flex-column min-vh-100" style="background-color:#111111!important;color:#d1d5db!important;padding-top:80px;">
     <nav class="navbar navbar-expand-lg shadow-sm mb-4 fixed-top d-flex align-items-center" style="background-color:#0f0f0f!important;border-bottom:1px solid #2d2d2d!important;padding-top:0.75rem;padding-bottom:0.75rem;min-height:56px;">
         <div class="container d-flex align-items-center justify-content-between">
             <a class="navbar-brand mb-0 d-flex align-items-center" href="/CampusBeacon/public/index.php">
@@ -70,5 +70,4 @@
     </nav>
     <!-- SweetAlert2 JS -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-</body>
-</html>
+    <div class="container flex-grow-1">

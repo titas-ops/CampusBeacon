@@ -42,7 +42,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['update_notice'])) {
     exit();
 }
 ?>
-<?php include '../client/header.php'; ?>
+<?php include '../includes/header.php'; ?>
 <div class="row justify-content-center" style="padding:0 10px;">
     <div class="col-md-8">
         <div class="card shadow">
@@ -95,4 +95,4 @@ input.addEventListener('keydown', function(e) {
 });
 render();
 </script>
-<?php include '../client/footer.php'; ?>
+<?php include '../includes/footer.php'; ?>

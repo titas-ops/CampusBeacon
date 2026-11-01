@@ -24,7 +24,7 @@ $notice_count = ($notice_res && $row = $notice_res->fetch_assoc()) ? $row['total
 $professors = $conn->query("SELECT id, username, email, created_at FROM users WHERE role = 'professor'");
 ?>
 
-<?php include '../../client/header.php'; ?>
+<?php include '../../includes/header.php'; ?>
 
 <script>
 function confirmDeleteProfessor(profId) {
@@ -227,4 +227,4 @@ function confirmDeleteProfessor(profId) {
     </script>
 </div>
 
-<?php include '../../public/footer.php'; ?>
+<?php include '../../includes/footer.php'; ?>

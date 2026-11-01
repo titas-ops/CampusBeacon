@@ -1,4 +1,4 @@
-<?php include '../client/header.php'; ?>
+<?php include '../includes/header.php'; ?>
 <div class="container mt-5">
     <div class="row justify-content-center align-items-center" style="min-height: 70vh;">
         <div class="col-md-6 col-lg-5">
@@ -38,4 +38,4 @@
         </div>
     </div>
 </div>
-<?php include '../client/footer.php'; ?>
+<?php include '../includes/footer.php'; ?>

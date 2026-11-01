@@ -58,7 +58,7 @@ if ($notice) {
     }
 }
 ?>
-<?php include '../client/header.php'; ?>
+<?php include '../includes/header.php'; ?>
 <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/dompurify@3.0.6/dist/purify.min.js"></script>
 <style>
@@ -130,4 +130,4 @@ document.addEventListener('DOMContentLoaded', function(){
         </div>
     </div>
 </div>
-<?php include '../client/footer.php'; ?>
+<?php include '../includes/footer.php'; ?>

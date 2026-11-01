@@ -6,7 +6,7 @@ require_once '../server/auth_helpers.php';
 $result = $conn->query("SELECT n.id, n.title, n.content, n.created_at, n.professor_id, u.username FROM notices n JOIN users u ON n.professor_id = u.id ORDER BY n.created_at DESC");
 $notices = $result ? $result->fetch_all(MYSQLI_ASSOC) : [];
 ?>
-<?php include '../client/header.php'; ?>
+<?php include '../includes/header.php'; ?>
 <style>body, html { background-color: #121212 !important; color: #f5f5f5 !important; }</style>
 <div class="container mt-4">
 <div class="row justify-content-center">
@@ -48,7 +48,7 @@ $notices = $result ? $result->fetch_all(MYSQLI_ASSOC) : [];
     </div>
 </div>
 </div>
-<?php include '../client/footer.php'; ?>
+<?php include '../includes/footer.php'; ?>
 <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
 <script>
 function confirmDelete(noticeId) {

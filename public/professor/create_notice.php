@@ -4,7 +4,7 @@ require_once '../../server/auth_helpers.php';
 require_once '../../database/db_connect.php';
 requireRole('professor');
 ?>
-<?php include '../../client/header.php'; ?>
+<?php include '../../includes/header.php'; ?>
 <div class="container-fluid" style="height: calc(100vh - 160px); padding: 20px 0;">
     <div class="row justify-content-center align-items-center" style="height: 100%;">
         <div class="col-auto" style="width: 70%;">
@@ -98,4 +98,4 @@ document.getElementById('pdfUpload').addEventListener('change', function() {
     }
 });
 </script>
-<?php include '../../client/footer.php'; ?>
+<?php include '../../includes/footer.php'; ?>
