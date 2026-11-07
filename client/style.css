@@ -1,20 +1,44 @@
-/* CampusBeacon - Blowfish (Hugo) Inspired Theme */
+/* CampusBeacon - Polished Dark Theme Palette */
 
 :root {
     color-scheme: dark;
-    --bg-color: #111111;
-    --text-color: #d1d5db;       /* Soft silver-grey */
-    --accent-color: #3b82f6;
-    --card-bg: #1a1a1a;
-    --border-color: #2d2d2d;
-    --success-color: #4ade80;
-    --error-color: #f87171;
+    --bg-main: #101113;
+    --bg-card: #191B1F;
+    --bg-table-header: #22252A;
+    --text-primary: #F1F3F5;
+    --text-secondary: #A7ADB7;
+    --accent: #3B82F6;
+    --border: #30343B;
+    --success: #22C55E;
+    --danger: #EF4444;
+
+    /* Bootstrap 5 Theme Variables */
+    --bs-body-bg: var(--bg-main);
+    --bs-body-color: var(--text-primary);
+    --bs-card-bg: var(--bg-card);
+    --bs-card-color: var(--text-primary);
+    --bs-card-border-color: var(--border);
+    --bs-list-group-bg: var(--bg-card);
+    --bs-list-group-color: var(--text-primary);
+    --bs-list-group-border-color: var(--border);
+    --bs-table-bg: var(--bg-card);
+    --bs-table-color: var(--text-primary);
+    --bs-table-border-color: var(--border);
+
+    /* Legacy compatibility mappings */
+    --bg-color: var(--bg-main);
+    --card-bg: var(--bg-card);
+    --text-color: var(--text-primary);
+    --accent-color: var(--accent);
+    --border-color: var(--border);
+    --success-color: var(--success);
+    --error-color: var(--danger);
     --nav-bg: #0f0f0f;
 }
 
 html, body {
-    background-color: var(--bg-color) !important;
-    color: var(--text-color) !important;
+    background-color: var(--bg-main) !important;
+    color: var(--text-primary) !important;
     font-family: 'Inter', 'Roboto', sans-serif !important;
     margin: 0;
     padding: 0;
@@ -23,37 +47,66 @@ html, body {
 h1, h2, h3, h4, h5, h6, .navbar-brand {
     font-family: 'Poppins', sans-serif !important;
     font-weight: 700 !important;
-    color: var(--text-color) !important;
-    text-transform: capitalize;
+    color: var(--text-primary) !important;
     letter-spacing: -0.02em;
 }
 
 /* Modern Glassmorphism Cards */
 .card, .notice-card, .container-card, .card-body {
-    background: var(--card-bg) !important;
-    color: var(--text-color) !important;
-    border: 1px solid var(--border-color) !important;
+    background: var(--bg-card) !important;
+    color: var(--text-primary) !important;
+    border: 1px solid var(--border) !important;
     border-radius: 12px !important;
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    cursor: pointer;
 }
 
 .card:hover {
-    border-color: var(--text-color) !important;
-    box-shadow: 0 10px 25px rgba(209, 213, 219, 0.15) !important;
-    transform: translateY(-5px);
-    background: #222222 !important;
+    border-color: var(--accent) !important;
+    box-shadow: 0 10px 25px rgba(59, 130, 246, 0.1) !important;
+    transform: translateY(-2px);
+}
+
+/* Tables Dark Theme Styling */
+.table, .table-responsive, table {
+    color: var(--text-primary) !important;
+    background-color: var(--bg-card) !important;
+    border-color: var(--border) !important;
+}
+
+.table th, .table td {
+    background-color: transparent !important;
+    color: var(--text-primary) !important;
+    border-color: var(--border) !important;
+    vertical-align: middle;
+}
+
+.table thead th {
+    background-color: var(--bg-table-header) !important;
+    color: var(--text-primary) !important;
+    font-weight: 600 !important;
+    border-bottom: 2px solid var(--border) !important;
+}
+
+.table tbody tr {
+    background-color: var(--bg-card) !important;
+    color: var(--text-primary) !important;
+    border-bottom: 1px solid var(--border) !important;
+}
+
+.table tbody tr:hover {
+    background-color: #21252b !important;
+    color: var(--text-primary) !important;
 }
 
 /* Inputs */
 input, textarea, select, .form-control {
     background-color: #16161e !important;
-    color: var(--text-color) !important;
-    border: 1px solid var(--border-color) !important;
+    color: var(--text-primary) !important;
+    border: 1px solid var(--border) !important;
 }
 
 input:focus, textarea:focus {
-    border-color: var(--accent-color) !important;
+    border-color: var(--accent) !important;
     box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.2) !important;
     outline: none;
 }
@@ -61,10 +114,10 @@ input:focus, textarea:focus {
 /* Buttons */
 .btn-primary, .btn-view-details {
     background-color: #000000 !important;
-    border: 1px solid var(--text-color) !important;
-    color: var(--text-color) !important;
+    border: 1px solid var(--text-primary) !important;
+    color: var(--text-primary) !important;
     font-weight: 600 !important;
-    border-radius: 50px !important; /* Fully rounded edges */
+    border-radius: 50px !important;
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
     padding: 0.4rem 1.2rem !important;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
@@ -72,20 +125,20 @@ input:focus, textarea:focus {
 
 .btn-primary:hover, .btn-view-details:hover {
     background-color: #1a1a1a !important;
-    border-color: #ffffff !important;
+    border-color: var(--text-primary) !important;
     color: #ffffff !important;
-    transform: translateY(-3px) scale(1.05);
+    transform: translateY(-2px) scale(1.02);
     box-shadow: 0 6px 15px rgba(0, 0, 0, 0.5);
 }
 
 /* Navbar */
 .navbar {
     background-color: var(--nav-bg) !important;
-    border-bottom: 1px solid var(--border-color) !important;
+    border-bottom: 1px solid var(--border) !important;
 }
 
 .nav-link {
-    color: var(--text-color) !important;
+    color: var(--text-primary) !important;
     font-family: 'Poppins', sans-serif;
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
     border-radius: 8px !important;
@@ -94,20 +147,74 @@ input:focus, textarea:focus {
 }
 
 .nav-link:hover {
-    color: var(--accent-color) !important;
-    background-color: rgba(255, 255, 255, 0.1) !important;
-    transform: translateY(-2px) scale(1.05) !important;
-    box-shadow: 0 4px 12px rgba(209, 213, 219, 0.2) !important;
+    color: var(--accent) !important;
+    background-color: rgba(255, 255, 255, 0.05) !important;
 }
 
 .text-muted {
-    color: #565f89 !important;
+    color: var(--text-secondary) !important;
 }
 
 .text-danger {
-    color: var(--error-color) !important;
+    color: var(--danger) !important;
 }
 
 .navbar-brand {
-    color: var(--text-color) !important;
+    color: var(--text-primary) !important;
+}
+
+/* List Groups */
+.list-group, .list-group-flush, .list-group-item {
+    background-color: var(--bg-card) !important;
+    color: var(--text-primary) !important;
+    border-color: var(--border) !important;
+}
+
+.list-group-item h6 {
+    color: var(--text-primary) !important;
+}
+
+.list-group-item:hover {
+    background-color: #21252b !important;
+    color: var(--text-primary) !important;
+}
+
+/* SweetAlert2 Dark Theme Customisation */
+.swal2-popup {
+    background: var(--bg-card) !important;
+    border: 1px solid var(--border) !important;
+    border-radius: 14px !important;
+    color: var(--text-primary) !important;
+    font-family: 'Poppins', sans-serif !important;
+}
+
+.swal2-title {
+    color: var(--text-primary) !important;
+    font-weight: 700 !important;
+}
+
+.swal2-html-container {
+    color: var(--text-secondary) !important;
+}
+
+.swal2-confirm {
+    background: var(--danger) !important;
+    color: #ffffff !important;
+    border-radius: 50px !important;
+    font-weight: 600 !important;
+    padding: 0.5rem 1.5rem !important;
+}
+
+.swal2-cancel {
+    background: var(--border) !important;
+    color: var(--text-primary) !important;
+    border: 1px solid #454B55 !important;
+    border-radius: 50px !important;
+    font-weight: 600 !important;
+    padding: 0.5rem 1.5rem !important;
+}
+
+.swal2-confirm:focus,
+.swal2-cancel:focus {
+    box-shadow: none !important;
 }
