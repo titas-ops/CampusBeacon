@@ -12,6 +12,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['id'])) {
     $comment_id = intval($_GET['id']);
     $notice_id = intval($_GET['notice_id'] ?? 0);
     $user_id = (int)$_SESSION['user_id'];
+    $role = $_SESSION['role'] ?? '';
+
+    if ($role === 'admin') {
+        $del_stmt = $conn->prepare("DELETE FROM comments WHERE id = ?");
+        $del_stmt->bind_param("i", $comment_id);
+        $del_stmt->execute();
+        $del_stmt->close();
+        header("Location: ../public/view_notice.php?id=$notice_id&success=deleted");
+        exit();
+    }
 
     $stmt = $conn->prepare("SELECT id FROM comments WHERE id = ? AND user_id = ?");
     $stmt->bind_param("ii", $comment_id, $user_id);

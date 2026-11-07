@@ -6,14 +6,14 @@ require_once '../server/auth_helpers.php';
 $id = intval($_GET['id'] ?? 0);
 $notice = null;
 if ($id > 0) {
-    $stmt = $conn->prepare("SELECT n.*, u.username FROM notices n LEFT JOIN users u ON n.professor_id = u.id WHERE n.id = ?");
+    $stmt = $conn->prepare("SELECT n.*, COALESCE(u.username, n.author_username, 'Deleted Professor') as username FROM notices n LEFT JOIN users u ON n.professor_id = u.id WHERE n.id = ?");
     $stmt->bind_param("i", $id);
     $stmt->execute();
     $notice = $stmt->get_result()->fetch_assoc();
     $stmt->close();
 }
 if ($notice) {
-    $cstmt = $conn->prepare("SELECT c.*, u.username, u.role FROM comments c LEFT JOIN users u ON c.user_id = u.id WHERE c.notice_id = ? ORDER BY c.created_at ASC");
+    $cstmt = $conn->prepare("SELECT c.*, COALESCE(u.username, c.author_username, 'Deleted User') as username, u.role FROM comments c LEFT JOIN users u ON c.user_id = u.id WHERE c.notice_id = ? ORDER BY c.created_at ASC");
     $cstmt->bind_param("i", $id);
     $cstmt->execute();
     $allComments = $cstmt->get_result()->fetch_all(MYSQLI_ASSOC);
@@ -34,18 +34,23 @@ if ($notice) {
             $username = $c['username'] ?? 'Deleted User';
             $roleLabel = ($c['role'] === 'professor') ? 'Prof' : (($c['role'] === 'admin') ? 'Admin' : 'Student');
             echo '<strong class="text-soft-white">'.$roleLabel.': '.htmlspecialchars($username).'</strong>';
-            if (isset($_SESSION['logged_in']) && $_SESSION['logged_in'] === true && (int)$_SESSION['user_id'] === (int)$c['user_id']) {
-                echo '<a href="delete_comment.php?id='.$c['id'].'&notice_id='.$GLOBALS['id'].'" class="text-danger small" onclick="return confirmDeleteComment()">Delete</a>';
+            
+            $canDeleteComment = (isset($_SESSION['logged_in']) && $_SESSION['logged_in'] === true && (hasRole('admin') || (int)$_SESSION['user_id'] === (int)$c['user_id']));
+            if ($canDeleteComment) {
+                echo '<a href="#" class="text-danger small" onclick="confirmDeleteComment('.$c['id'].', '.$GLOBALS['id'].'); return false;">Delete</a>';
             }
             echo '</div>';
             echo '<p class="mb-1 text-soft-white">'.htmlspecialchars($c['comment_text']).'</p>';
             echo '<div class="d-flex align-items-center gap-2">';
             echo '<small class="text-muted">at '.date('h:i A', strtotime($c['created_at'])).' on '.date('d M', strtotime($c['created_at'])).'</small>';
-            if (isset($_SESSION['logged_in']) && $_SESSION['logged_in'] === true) {
-                echo '<a href="#" class="reply-link small" style="text-decoration:none; font-size: 0.8rem; color:#f0ead6 !important; font-weight: bold;" data-id="'.$c['id'].'">Reply</a>';
+            
+            $canReply = (isset($_SESSION['logged_in']) && $_SESSION['logged_in'] === true && (hasRole('student') || hasRole('professor')));
+            if ($canReply) {
+                echo '<a href="#" class="reply-link small" style="text-decoration:none; font-size: 0.8rem; color:var(--accent) !important; font-weight: bold;" data-id="'.$c['id'].'">Reply</a>';
             }
             echo '</div>';
-            if (isset($_SESSION['logged_in']) && $_SESSION['logged_in'] === true) {
+            
+            if ($canReply) {
                 echo '<form class="reply-form mt-2" data-parent="'.$c['id'].'" style="display:none;" method="POST" action="../server/comments.php">';
                 echo '<input type="hidden" name="notice_id" value="'.$GLOBALS['id'].'">';
                 echo '<input type="hidden" name="parent_id" value="'.$c['id'].'">';
@@ -81,6 +86,44 @@ document.addEventListener('DOMContentLoaded', function(){
         });
     });
 });
+
+function confirmDeleteComment(commentId, noticeId) {
+    Swal.fire({
+        title: 'Are you sure?',
+        text: "You are about to delete this comment!",
+        icon: 'warning',
+        background: '#191B1F',
+        color: '#F1F3F5',
+        showCancelButton: true,
+        confirmButtonColor: '#EF4444',
+        cancelButtonColor: '#3B82F6',
+        confirmButtonText: 'Yes, delete it!',
+        cancelButtonText: 'No, keep it',
+    }).then((result) => {
+        if (result.isConfirmed) {
+            window.location.href = 'delete_comment.php?id=' + commentId + '&notice_id=' + noticeId;
+        }
+    });
+}
+
+function confirmDeleteNotice(noticeId) {
+    Swal.fire({
+        title: 'Are you sure?',
+        text: "You are about to delete this notice!",
+        icon: 'warning',
+        background: '#191B1F',
+        color: '#F1F3F5',
+        showCancelButton: true,
+        confirmButtonColor: '#EF4444',
+        cancelButtonColor: '#3B82F6',
+        confirmButtonText: 'Yes, delete it!',
+        cancelButtonText: 'No, keep it',
+    }).then((result) => {
+        if (result.isConfirmed) {
+            window.location.href = 'delete_notice.php?id=' + noticeId;
+        }
+    });
+}
 </script>
 <div class="container mt-5">
     <div class="row justify-content-center">
@@ -99,8 +142,16 @@ document.addEventListener('DOMContentLoaded', function(){
                         </div>
                         <script>document.getElementById('noticeContent').innerHTML = DOMPurify.sanitize(marked.parse(<?php echo json_encode($notice['content']); ?>));</script>
                         <?php if (!empty($notice['pdf_data'])): ?>
-                            <div class="alert alert-info bg-card border-theme text-soft-white">
+                            <div class="alert alert-info bg-card border-theme text-soft-white mt-3">
                                 <strong class="text-soft-white">Attached Document:</strong> <a href="stream_pdf.php?id=<?php echo $id; ?>" target="_blank" class="text-accent">View PDF</a>
+                            </div>
+                        <?php endif; ?>
+
+                        <?php if (hasRole('admin')): ?>
+                            <div class="mt-4 pt-3 border-top border-theme d-flex justify-content-end">
+                                <button type="button" class="btn btn-outline-danger btn-sm" onclick="confirmDeleteNotice(<?php echo $id; ?>)">
+                                    <i class="bi bi-trash"></i> Delete Notice
+                                </button>
                             </div>
                         <?php endif; ?>
                     </div>
@@ -122,8 +173,10 @@ document.addEventListener('DOMContentLoaded', function(){
                                 </div>
                                 <button type="submit" class="btn btn-primary btn-sm">Post Comment</button>
                             </form>
+                        <?php elseif (hasRole('admin')): ?>
+                            <p class="text-muted fst-italic mb-0"><i class="bi bi-shield-lock"></i> Logged in as Admin (Moderator view).</p>
                         <?php else: ?>
-                            <p class="text-muted"><a href="login.php" class="text-soft-white">Login</a> as a student or professor to comment.</p>
+                            <p class="text-muted mb-0"><a href="login.php" class="text-soft-white">Login</a> as a student or professor to comment.</p>
                         <?php endif; ?>
                     </div>
                 </div>

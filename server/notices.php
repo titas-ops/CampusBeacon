@@ -54,15 +54,16 @@ function handleCreateNotice() {
     }
 
     $professor_id = (int) $_SESSION['user_id'];
+    $author_username = $_SESSION['username'] ?? 'Professor';
 
     if ($pdf_data !== null) {
-        $stmt = $conn->prepare("INSERT INTO notices (professor_id, title, content, pdf_data) VALUES (?, ?, ?, ?)");
+        $stmt = $conn->prepare("INSERT INTO notices (professor_id, author_username, title, content, pdf_data) VALUES (?, ?, ?, ?, ?)");
         $null = null;
-        $stmt->bind_param("issb", $professor_id, $title, $content, $null);
-        $stmt->send_long_data(3, $pdf_data);
+        $stmt->bind_param("isssb", $professor_id, $author_username, $title, $content, $null);
+        $stmt->send_long_data(4, $pdf_data);
     } else {
-        $stmt = $conn->prepare("INSERT INTO notices (professor_id, title, content, pdf_data) VALUES (?, ?, ?, NULL)");
-        $stmt->bind_param("iss", $professor_id, $title, $content);
+        $stmt = $conn->prepare("INSERT INTO notices (professor_id, author_username, title, content, pdf_data) VALUES (?, ?, ?, ?, NULL)");
+        $stmt->bind_param("isss", $professor_id, $author_username, $title, $content);
     }
 
     if ($stmt->execute()) {

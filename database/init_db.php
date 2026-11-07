@@ -38,6 +38,7 @@ $tables = [
     "notices" => "CREATE TABLE IF NOT EXISTS notices (
         id INT(11) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
         professor_id INT(11) UNSIGNED NULL,
+        author_username VARCHAR(50) NULL,
         title VARCHAR(255) NOT NULL,
         content TEXT NOT NULL,
         pdf_data LONGBLOB,
@@ -49,6 +50,7 @@ $tables = [
         id INT(11) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
         notice_id INT(11) UNSIGNED NOT NULL,
         user_id INT(11) UNSIGNED NULL,
+        author_username VARCHAR(50) NULL,
         parent_id INT(11) UNSIGNED NULL,
         comment_text TEXT NOT NULL,
         created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
@@ -63,6 +65,9 @@ foreach ($tables as $tableName => $sql) {
         die("Error creating table $tableName: " . $conn_init->error);
     }
 }
+
+@$conn_init->query("ALTER TABLE notices ADD COLUMN author_username VARCHAR(50) NULL");
+@$conn_init->query("ALTER TABLE comments ADD COLUMN author_username VARCHAR(50) NULL");
 
 // 3. Create Default Admin User (if table is empty)
 $check_users = $conn_init->query("SELECT id FROM users LIMIT 1");

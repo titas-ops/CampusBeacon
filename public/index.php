@@ -3,7 +3,7 @@ session_start();
 date_default_timezone_set('Asia/Kolkata');
 require_once '../database/db_connect.php';
 require_once '../server/auth_helpers.php';
-$result = $conn->query("SELECT n.id, n.title, n.content, n.created_at, n.professor_id, u.username FROM notices n LEFT JOIN users u ON n.professor_id = u.id ORDER BY n.created_at DESC");
+$result = $conn->query("SELECT n.id, n.title, n.content, n.created_at, n.professor_id, COALESCE(u.username, n.author_username, 'Deleted Professor') as username FROM notices n LEFT JOIN users u ON n.professor_id = u.id ORDER BY n.created_at DESC");
 $notices = $result ? $result->fetch_all(MYSQLI_ASSOC) : [];
 ?>
 <?php include '../includes/header.php'; ?>

@@ -29,12 +29,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         exit();
     }
     $user_id = (int) $_SESSION['user_id'];
+    $author_username = $_SESSION['username'] ?? 'User';
     if ($parent_id === null) {
-        $stmt = $conn->prepare("INSERT INTO comments (notice_id, user_id, comment_text) VALUES (?, ?, ?)");
-        $stmt->bind_param("iis", $notice_id, $user_id, $comment);
+        $stmt = $conn->prepare("INSERT INTO comments (notice_id, user_id, author_username, comment_text) VALUES (?, ?, ?, ?)");
+        $stmt->bind_param("iiss", $notice_id, $user_id, $author_username, $comment);
     } else {
-        $stmt = $conn->prepare("INSERT INTO comments (notice_id, user_id, parent_id, comment_text) VALUES (?, ?, ?, ?)");
-        $stmt->bind_param("iiis", $notice_id, $user_id, $parent_id, $comment);
+        $stmt = $conn->prepare("INSERT INTO comments (notice_id, user_id, author_username, parent_id, comment_text) VALUES (?, ?, ?, ?, ?)");
+        $stmt->bind_param("iisis", $notice_id, $user_id, $author_username, $parent_id, $comment);
     }
     $stmt->execute();
     $stmt->close();
