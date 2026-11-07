@@ -30,28 +30,30 @@ $tables = [
         email VARCHAR(100) NOT NULL UNIQUE,
         password VARCHAR(255) NOT NULL,
         role ENUM('admin', 'professor', 'student') NOT NULL,
+        reset_token VARCHAR(255) NULL,
+        reset_expires DATETIME NULL,
         created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
     ) ENGINE=InnoDB",
 
     "notices" => "CREATE TABLE IF NOT EXISTS notices (
         id INT(11) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-        professor_id INT(11) UNSIGNED NOT NULL,
+        professor_id INT(11) UNSIGNED NULL,
         title VARCHAR(255) NOT NULL,
         content TEXT NOT NULL,
         pdf_data LONGBLOB,
         created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-        FOREIGN KEY (professor_id) REFERENCES users(id) ON DELETE CASCADE
+        FOREIGN KEY (professor_id) REFERENCES users(id) ON DELETE SET NULL
     ) ENGINE=InnoDB",
 
     "comments" => "CREATE TABLE IF NOT EXISTS comments (
         id INT(11) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
         notice_id INT(11) UNSIGNED NOT NULL,
-        user_id INT(11) UNSIGNED NOT NULL,
+        user_id INT(11) UNSIGNED NULL,
         parent_id INT(11) UNSIGNED NULL,
         comment_text TEXT NOT NULL,
         created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
         FOREIGN KEY (notice_id) REFERENCES notices(id) ON DELETE CASCADE,
-        FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
+        FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE SET NULL,
         FOREIGN KEY (parent_id) REFERENCES comments(id) ON DELETE CASCADE
     ) ENGINE=InnoDB"
 ];

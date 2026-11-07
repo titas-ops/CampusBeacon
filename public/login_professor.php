@@ -30,9 +30,7 @@
                             <button type="submit" name="professor_login" class="btn btn-view-details py-3 w-100 text-accent" style="font-weight: 600 !important;">Login</button>
                         </div>
                     </form>
-                    <div class="text-center mt-4">
-                        <small><a href="forgot_password.php" class="text-soft-white" style="opacity: 0.7; text-decoration: none;">Forgot password?</a></small>
-                    </div>
+
                 </div>
             </div>
         </div>

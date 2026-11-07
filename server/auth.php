@@ -149,4 +149,6 @@ function handleLogout() {
     header("Location: ../public/login.php");
     exit();
 }
+
+
 ?>

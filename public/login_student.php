@@ -38,7 +38,6 @@
                     </form>
                     <div class="text-center mt-4">
                         <p class="mb-1 text-soft-white">Don't have an account? <a href="signup.php" class="text-accent" style="text-decoration: none;">Register here</a></p>
-                        <small><a href="forgot_password.php" class="text-soft-white" style="opacity: 0.7; text-decoration: none;">Forgot password?</a></small>
                     </div>
                 </div>
             </div>

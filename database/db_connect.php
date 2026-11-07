@@ -27,6 +27,14 @@ if ($legacyCol && $legacyCol->num_rows > 0) {
 }
 
 /**
+ * Ensure reset_token and reset_expires columns exist in users table.
+ */
+$tokenCol = $conn->query("SHOW COLUMNS FROM users LIKE 'reset_token'");
+if ($tokenCol && $tokenCol->num_rows === 0) {
+    $conn->query("ALTER TABLE users ADD COLUMN reset_token VARCHAR(255) NULL, ADD COLUMN reset_expires DATETIME NULL");
+}
+
+/**
  * The $conn variable is now available globally for all scripts that include this file.
  */
 ?>

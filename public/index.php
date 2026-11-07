@@ -3,7 +3,7 @@ session_start();
 date_default_timezone_set('Asia/Kolkata');
 require_once '../database/db_connect.php';
 require_once '../server/auth_helpers.php';
-$result = $conn->query("SELECT n.id, n.title, n.content, n.created_at, n.professor_id, u.username FROM notices n JOIN users u ON n.professor_id = u.id ORDER BY n.created_at DESC");
+$result = $conn->query("SELECT n.id, n.title, n.content, n.created_at, n.professor_id, u.username FROM notices n LEFT JOIN users u ON n.professor_id = u.id ORDER BY n.created_at DESC");
 $notices = $result ? $result->fetch_all(MYSQLI_ASSOC) : [];
 ?>
 <?php include '../includes/header.php'; ?>
@@ -37,7 +37,7 @@ $notices = $result ? $result->fetch_all(MYSQLI_ASSOC) : [];
                                         <?php endif; ?>
                                     </div>
                                 <?php endif; ?>
-                                <div class="text-soft-white">Prof: <?php echo htmlspecialchars($n['username']); ?></div>
+                                <div class="text-soft-white">Prof: <?php echo htmlspecialchars($n['username'] ?? 'Deleted Professor'); ?></div>
                                 <small class="text-muted">at <?php echo date('h:i A', strtotime($n['created_at'])); ?> on <?php echo date('d M', strtotime($n['created_at'])); ?></small>
                             </div>
                         </div>

@@ -6,14 +6,14 @@ require_once '../server/auth_helpers.php';
 $id = intval($_GET['id'] ?? 0);
 $notice = null;
 if ($id > 0) {
-    $stmt = $conn->prepare("SELECT n.*, u.username FROM notices n JOIN users u ON n.professor_id = u.id WHERE n.id = ?");
+    $stmt = $conn->prepare("SELECT n.*, u.username FROM notices n LEFT JOIN users u ON n.professor_id = u.id WHERE n.id = ?");
     $stmt->bind_param("i", $id);
     $stmt->execute();
     $notice = $stmt->get_result()->fetch_assoc();
     $stmt->close();
 }
 if ($notice) {
-    $cstmt = $conn->prepare("SELECT c.*, u.username, u.role FROM comments c JOIN users u ON c.user_id = u.id WHERE c.notice_id = ? ORDER BY c.created_at ASC");
+    $cstmt = $conn->prepare("SELECT c.*, u.username, u.role FROM comments c LEFT JOIN users u ON c.user_id = u.id WHERE c.notice_id = ? ORDER BY c.created_at ASC");
     $cstmt->bind_param("i", $id);
     $cstmt->execute();
     $allComments = $cstmt->get_result()->fetch_all(MYSQLI_ASSOC);
@@ -31,8 +31,9 @@ if ($notice) {
             $margin = $depth * 20;
             echo '<div class="mb-3 p-2 border-bottom comment-tree" data-userid="'.$c['user_id'].'" style="margin-left:'.$margin.'px;">';
             echo '<div class="d-flex justify-content-between align-items-center">';
-            $roleLabel = ($c['role'] === 'professor') ? 'Prof' : 'Student';
-            echo '<strong class="text-soft-white">'.$roleLabel.': '.htmlspecialchars($c['username']).'</strong>';
+            $username = $c['username'] ?? 'Deleted User';
+            $roleLabel = ($c['role'] === 'professor') ? 'Prof' : (($c['role'] === 'admin') ? 'Admin' : 'Student');
+            echo '<strong class="text-soft-white">'.$roleLabel.': '.htmlspecialchars($username).'</strong>';
             if (isset($_SESSION['logged_in']) && $_SESSION['logged_in'] === true && (int)$_SESSION['user_id'] === (int)$c['user_id']) {
                 echo '<a href="delete_comment.php?id='.$c['id'].'&notice_id='.$GLOBALS['id'].'" class="text-danger small" onclick="return confirmDeleteComment()">Delete</a>';
             }
@@ -92,7 +93,7 @@ document.addEventListener('DOMContentLoaded', function(){
                         <div class="notice-content mb-4" id="noticeContent"></div>
                         <div class="d-flex justify-content-end">
                             <div class="text-end">
-                                <div class="text-soft-white">Prof: <?php echo htmlspecialchars($notice['username']); ?></div>
+                                <div class="text-soft-white">Prof: <?php echo htmlspecialchars($notice['username'] ?? 'Deleted Professor'); ?></div>
                                 <small class="text-muted">at <?php echo date('h:i A', strtotime($notice['created_at'])); ?> on <?php echo date('d M', strtotime($notice['created_at'])); ?></small>
                             </div>
                         </div>
