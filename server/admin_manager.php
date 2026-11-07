@@ -21,6 +21,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         handleAddProfessor();
     } elseif (isset($_POST['delete_professor'])) {
         handleDeleteProfessor();
+    } elseif (isset($_POST['delete_student'])) {
+        handleDeleteStudent();
+    } elseif (isset($_POST['delete_notice'])) {
+        handleDeleteNotice();
+    } elseif (isset($_POST['delete_comment'])) {
+        handleDeleteComment();
     }
 }
 
@@ -72,6 +78,60 @@ function handleDeleteProfessor() {
         header("Location: ../public/admin/dashboard.php?success=professor_deleted");
     } else {
         header("Location: ../public/admin/dashboard.php?error=delete_failed");
+    }
+    $stmt->close();
+    exit();
+}
+
+function handleDeleteStudent() {
+    global $conn;
+    $student_id = intval($_POST['student_id'] ?? 0);
+    if ($student_id <= 0) {
+        header("Location: ../public/admin/students.php?error=invalid_id");
+        exit();
+    }
+    $stmt = $conn->prepare("DELETE FROM users WHERE id = ? AND role = 'student'");
+    $stmt->bind_param("i", $student_id);
+    if ($stmt->execute()) {
+        header("Location: ../public/admin/students.php?success=student_deleted");
+    } else {
+        header("Location: ../public/admin/students.php?error=delete_failed");
+    }
+    $stmt->close();
+    exit();
+}
+
+function handleDeleteNotice() {
+    global $conn;
+    $notice_id = intval($_POST['notice_id'] ?? 0);
+    if ($notice_id <= 0) {
+        header("Location: ../public/admin/notices.php?error=invalid_id");
+        exit();
+    }
+    $stmt = $conn->prepare("DELETE FROM notices WHERE id = ?");
+    $stmt->bind_param("i", $notice_id);
+    if ($stmt->execute()) {
+        header("Location: ../public/admin/notices.php?success=notice_deleted");
+    } else {
+        header("Location: ../public/admin/notices.php?error=delete_failed");
+    }
+    $stmt->close();
+    exit();
+}
+
+function handleDeleteComment() {
+    global $conn;
+    $comment_id = intval($_POST['comment_id'] ?? 0);
+    if ($comment_id <= 0) {
+        header("Location: ../public/admin/notices.php?error=invalid_id");
+        exit();
+    }
+    $stmt = $conn->prepare("DELETE FROM comments WHERE id = ?");
+    $stmt->bind_param("i", $comment_id);
+    if ($stmt->execute()) {
+        header("Location: ../public/admin/notices.php?success=comment_deleted");
+    } else {
+        header("Location: ../public/admin/notices.php?error=delete_failed");
     }
     $stmt->close();
     exit();
